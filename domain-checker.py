@@ -19,10 +19,16 @@ def main(argv):
         elif opt in ("-l", "--length"):
             length = int(arg)
 
-    # TODO Generate list of domains
-    chars = list("abcdefghijklmnopqrstuvwxyz")
+    # Build list of tuples containing alphabet
+    probs = ()
+    for i in range(length):
+        probs += (string.ascii_lowercase,)
 
+    # Build list of domains
     domains = []
+    for prob in itertools.product(*probs):
+        print(prob)
+        domains += ''.join(prob)
 
     print("Checking %s domains..." % len(domains))
 
