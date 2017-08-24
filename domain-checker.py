@@ -5,6 +5,9 @@ import sys
 import itertools
 
 def main(argv):
+    length = 2
+    tld = ".com"
+    chars = "abcdefghijklmnopqrstuvwxyz"
     try:
         opts, args = getopt.getopt(argv,"hl:t:c:",["length=","tld=", "chars="])
     except getopt.GetoptError:
