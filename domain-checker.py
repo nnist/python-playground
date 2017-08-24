@@ -1,9 +1,11 @@
 # TODO Top level domain argument
 # TODO Chars argument
 
+import string
 from tqdm import *
 import getopt
 import sys
+import itertools
 
 def main(argv):
     try:
