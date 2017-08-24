@@ -1,4 +1,3 @@
-# TODO Top level domain argument
 # TODO Chars argument
 
 import string
