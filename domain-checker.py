@@ -24,12 +24,7 @@ def main(argv):
 
     domains = []
 
-    # TODO Create a list of domains of length length
-    # length = 1 -> [a-z] = 26
-    # length = 3 -> [a-z][a-z][a-z] = 26 * 26 * 26
-
-    # TODO Print total num of domains to check
-    # print("Checking # domains...")
+    print("Checking %s domains..." % len(domains))
 
 if __name__ == "__main__":
     try:
