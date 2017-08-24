@@ -1,5 +1,3 @@
-# TODO Chars argument
-
 import string
 from tqdm import *
 import getopt
@@ -8,23 +6,25 @@ import itertools
 
 def main(argv):
     try:
-        opts, args = getopt.getopt(argv,"hl:t:",["length=","tld="])
+        opts, args = getopt.getopt(argv,"hl:t:c:",["length=","tld=", "chars="])
     except getopt.GetoptError:
-        print('usage: domain-checker.py -l <length> -t <tld>')
+        print('usage: domain-checker.py -l <length> -t <tld> -c <chars>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('usage: domain-checker.py -l <length> -t <tld>')
+            print('usage: domain-checker.py -l <length> -t <tld> -c <chars>')
             sys.exit()
         elif opt in ("-l", "--length"):
             length = int(arg)
         elif opt in ("-t", "--tld"):
             tld = str(arg)
+        elif opt in ("-c", "--chars"):
+            chars = str(arg)
 
     # Build list of tuples containing alphabet
     probs = ()
     for i in range(length):
-        probs += (string.ascii_lowercase,)
+        probs += (chars,)
 
     # Build list of domains
     domains = []
