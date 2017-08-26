@@ -1,7 +1,4 @@
 # https://en.wikipedia.org/wiki/Domain_hack
-# TODO Load dictionary
-# TODO Create list of TLDs
-# TODO Find words ending with TLD (.de, .se) like co.de or comato.se
 
 import string
 from tqdm import *
