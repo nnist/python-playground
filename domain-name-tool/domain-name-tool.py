@@ -53,7 +53,6 @@ def main(argv):
                 domain = line[0:-(len(tld) + 1)] + "." + tld
                 domains.append(domain)
 
-    print(domains)
     print("Checking %s domains..." % len(domains))
 
     for domain in domains:
