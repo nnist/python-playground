@@ -40,12 +40,13 @@ def main(argv):
 #       domain = ''.join(prob) + tld
 #       domains.append(domain)
 
-    # Load dictionary
-    dictionary = open("dictionary.txt", "r")
-    lines = dictionary.readlines()
-    print(lines)
-    print(len(lines))
-    dictionary.close()
+    # Load dictionary, check for lines ending with tld
+    domains = []
+    with open('dictionary.txt') as f:
+        for line in f:
+            if(line[0:-1].endswith(tld)):
+                domain = line[0:-(len(tld) + 1)] + "." + tld
+                domains.append(domain)
 
     print(domains)
     print("Checking %s domains..." % len(domains))
