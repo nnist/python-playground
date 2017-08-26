@@ -44,7 +44,7 @@ def main(argv):
     domains = []
     with open('dictionary.txt') as f:
         for line in f:
-            if(line[0:-1].endswith(tld)):
+            if(line[0:-1].endswith(tld)) and '-' not in line:
                 domain = line[0:-(len(tld) + 1)] + "." + tld
                 domains.append(domain)
 
