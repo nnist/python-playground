@@ -1,29 +1,12 @@
 # https://en.wikipedia.org/wiki/Domain_hack
 
+import whois
 import string
-from tqdm import *
 import getopt
 import sys
 import itertools
 import urllib.request
 from urllib.error import URLError, HTTPError
-
-def check_domain(url):
-    headers = {}
-    headers['User-Agent'] = "Mozilla/5.0 (Windows NT 6.1; rv:37.0) Gecko/20100101 Firefox/37.0"
-    try:
-        req = urllib.request.Request(url, headers=headers)
-        response = urllib.request.urlopen(req, timeout=2)
-        html = response.read()
-    except HTTPError as e:
-        return e.code
-    except URLError as e:
-        return -2
-        #print(str(e.reason))
-    except:
-        return 123
-    else:
-        return 200
 
 def main(argv):
     length = 2
@@ -55,9 +38,20 @@ def main(argv):
 
     print("Checking %s domains..." % len(domains))
 
-    for domain in domains:
-        status = check_domain("http://" + domain)
-        print("http://" + domain, "->", status)
+    for i in range(len(domains)):
+        print("[" + str(i) + "/" + str(len(domains)) + "] " + domains[i], end=" -> ", flush=True)
+        try:
+            w = whois.whois(domains[i])
+        except:
+            print("whois error")
+        else:
+            if(w):
+                if(w.emails is None):
+                    print("no email")
+                else:
+                    print("yes email")
+            else:
+                print("no whois")
 
 if __name__ == "__main__":
     try:
