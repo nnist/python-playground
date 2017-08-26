@@ -26,17 +26,6 @@ def main(argv):
         elif opt in ("-c", "--chars"):
             chars = str(arg)
 
-#   # Build list of tuples containing alphabet
-#   probs = ()
-#   for i in range(length):
-#       probs += (chars,)
-
-#   # Build list of domains
-#   domains = []
-#   for prob in itertools.product(*probs):
-#       domain = ''.join(prob) + tld
-#       domains.append(domain)
-
     # Load dictionary, check for lines ending with tld
     domains = []
     with open('dictionary.txt') as f:
