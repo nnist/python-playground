@@ -41,7 +41,7 @@ def main(argv):
     print("Checking %s domains..." % len(domains))
 
     for i in range(len(domains)):
-        print("[" + str(i) + "/" + str(len(domains)) + "] " + domains[i], end=" -> ", flush=True)
+        print("[" + str(i+1) + "/" + str(len(domains)) + "] " + domains[i], end=" -> ", flush=True)
         try:
             w = whois.whois(domains[i])
         except:
