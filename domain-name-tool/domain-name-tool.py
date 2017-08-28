@@ -12,15 +12,16 @@ def main(argv):
     length_min = 2
     length_max = 4
     tld = ".com"
+    dict_file = "dictionary.txt"
     chars = "abcdefghijklmnopqrstuvwxyz"
     try:
-        opts, args = getopt.getopt(argv,"hl:L:t:c:",["length-min=","length-max","tld=", "chars="])
+        opts, args = getopt.getopt(argv,"hl:L:t:c:f:",["length-min=","length-max","tld=", "chars=", "file="])
     except getopt.GetoptError:
-        print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars>')
+        print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars> -f <file>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars>')
+            print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars> -f <file>')
             sys.exit()
         elif opt in ("-l", "--length-min"):
             length_min = int(arg)
@@ -30,10 +31,12 @@ def main(argv):
             tld = str(arg)
         elif opt in ("-c", "--chars"):
             chars = str(arg)
+        elif opt in ("-f", "--file"):
+            dict_file = str(arg)
 
     # Load dictionary, check for lines ending with tld
     domains = []
-    with open('dictionary.txt') as f:
+    with open(dict_file) as f:
         for line in f:
             line = line[0:-1].lower()
             if(line.endswith(tld)) and '-' not in line:
