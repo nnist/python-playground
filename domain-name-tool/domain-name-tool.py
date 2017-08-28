@@ -9,20 +9,23 @@ import urllib.request
 from urllib.error import URLError, HTTPError
 
 def main(argv):
-    length = 2
+    length_min = 2
+    length_max = 4
     tld = ".com"
     chars = "abcdefghijklmnopqrstuvwxyz"
     try:
-        opts, args = getopt.getopt(argv,"hl:t:c:",["length=","tld=", "chars="])
+        opts, args = getopt.getopt(argv,"hl:L:t:c:",["length-min=","length-max","tld=", "chars="])
     except getopt.GetoptError:
-        print('usage: domain-checker.py -l <length> -t <tld> -c <chars>')
+        print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('usage: domain-checker.py -l <length> -t <tld> -c <chars>')
+            print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars>')
             sys.exit()
-        elif opt in ("-l", "--length"):
-            length = int(arg)
+        elif opt in ("-l", "--length-min"):
+            length_min = int(arg)
+        elif opt in ("-L", "--length-max"):
+            length_max = int(arg)
         elif opt in ("-t", "--tld"):
             tld = str(arg)
         elif opt in ("-c", "--chars"):
@@ -34,7 +37,7 @@ def main(argv):
         for line in f:
             line = line[0:-1].lower()
             if(line.endswith(tld)) and '-' not in line:
-                if(len(line) <= length):
+                if(len(line) >= length_min and len(line) <= length_max):
                     domain = line[0:-(len(tld))] + "." + tld
                     domains.append(domain)
 
