@@ -45,13 +45,10 @@ def main(argv):
         except:
             print("whois error")
         else:
-            if(w):
-                if(w.emails is None):
-                    print("no email")
-                else:
-                    print("yes email")
+            if(all(x==None for x in w.values())):
+                print("whois empty")
             else:
-                print("no whois")
+                print("whois not empty")
 
 if __name__ == "__main__":
     try:
