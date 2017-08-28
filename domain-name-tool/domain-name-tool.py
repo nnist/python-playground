@@ -1,4 +1,5 @@
 # https://en.wikipedia.org/wiki/Domain_hack
+# TODO Allow quitting program
 
 import whois
 import string
@@ -53,6 +54,7 @@ def main(argv):
 
     for i in range(len(domains)):
         print("[" + str(i+1) + "/" + str(len(domains)) + "] " + domains[i], end=" -> ", flush=True)
+        # TODO Fix Socket Error: timed out
         try:
             w = whois.whois(domains[i])
             time.sleep(delay)
