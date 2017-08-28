@@ -45,12 +45,12 @@ def main(argv):
         try:
             w = whois.whois(domains[i])
         except:
-            print("whois error")
+            print("\033[33mwhois error\033[0m")
         else:
             if(all(x==None for x in w.values())):
-                print("whois empty")
+                print("\033[32mavailable\033[0m")
             else:
-                print("whois not empty")
+                print("\033[31mregistered\033[0m")
 
 if __name__ == "__main__":
     try:
