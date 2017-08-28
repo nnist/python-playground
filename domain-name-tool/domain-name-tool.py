@@ -32,7 +32,7 @@ def main(argv):
     domains = []
     with open('dictionary.txt') as f:
         for line in f:
-            line = line[0:-1]
+            line = line[0:-1].lower()
             if(line.endswith(tld)) and '-' not in line:
                 if(len(line) <= length):
                     domain = line[0:-(len(tld))] + "." + tld
