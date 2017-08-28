@@ -4,6 +4,7 @@ import whois
 import string
 import getopt
 import sys
+import time
 import itertools
 import urllib.request
 from urllib.error import URLError, HTTPError
@@ -14,14 +15,16 @@ def main(argv):
     tld = ".com"
     dict_file = "dictionary.txt"
     chars = "abcdefghijklmnopqrstuvwxyz"
+    delay = 2.0
+
     try:
-        opts, args = getopt.getopt(argv,"hl:L:t:c:f:",["length-min=","length-max","tld=", "chars=", "file="])
+        opts, args = getopt.getopt(argv,"hl:L:t:c:f:d:",["length-min=","length-max","tld=", "chars=", "file=", "delay="])
     except getopt.GetoptError:
-        print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars> -f <file>')
+        print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars> -f <file> -d <delay>')
         sys.exit(2)
     for opt, arg in opts:
         if opt == '-h':
-            print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars> -f <file>')
+            print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars> -f <file> -d <delay>')
             sys.exit()
         elif opt in ("-l", "--length-min"):
             length_min = int(arg)
@@ -33,6 +36,8 @@ def main(argv):
             chars = str(arg)
         elif opt in ("-f", "--file"):
             dict_file = str(arg)
+        elif opt in ("-d", "--delay"):
+            delay = float(arg)
 
     # Load dictionary, check for lines ending with tld
     domains = []
@@ -50,6 +55,7 @@ def main(argv):
         print("[" + str(i+1) + "/" + str(len(domains)) + "] " + domains[i], end=" -> ", flush=True)
         try:
             w = whois.whois(domains[i])
+            time.sleep(delay)
         except:
             print("\033[32mavailable\033[0m")
         else:
