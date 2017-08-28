@@ -48,10 +48,10 @@ def main(argv):
         try:
             w = whois.whois(domains[i])
         except:
-            print("\033[33mwhois error\033[0m")
+            print("\033[32mavailable\033[0m")
         else:
             if(all(x==None for x in w.values())):
-                print("\033[32mavailable\033[0m")
+                print("\033[33munknown\033[0m")
             else:
                 print("\033[31mregistered\033[0m")
 
