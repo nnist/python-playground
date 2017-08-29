@@ -53,6 +53,7 @@ def main(argv):
 
     for i in range(len(domains)):
         print("[" + str(i+1) + "/" + str(len(domains)) + "] " + domains[i], end=" -> ", flush=True)
+        # TODO Option to write available and unknown to file
         # TODO Fix Socket Error: timed out
         try:
             w = whois.whois(domains[i])
