@@ -1,5 +1,4 @@
 # https://en.wikipedia.org/wiki/Domain_hack
-# TODO Allow quitting program
 
 import whois
 import string
@@ -58,6 +57,9 @@ def main(argv):
         try:
             w = whois.whois(domains[i])
             time.sleep(delay)
+        except KeyboardInterrupt:
+            print('\nInterrupted by user.')
+            sys.exit(0)
         except:
             print("\033[32mavailable\033[0m")
         else:
