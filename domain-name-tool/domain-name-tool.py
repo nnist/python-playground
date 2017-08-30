@@ -54,8 +54,8 @@ def main(argv):
     # Try to get whois information for domain to see if it is available or not
     for i in range(len(domains)):
         print("[" + str(i+1) + "/" + str(len(domains)) + "] " + domains[i], end=" -> ", flush=True)
-        # TODO Option to write available and unknown to file
         # TODO Fix Socket Error: timed out
+        f = open('log.txt', 'a')
         try:
             w = whois.whois(domains[i])
             time.sleep(delay)
@@ -64,11 +64,14 @@ def main(argv):
             sys.exit(0)
         except:
             print("\033[32mavailable\033[0m")
+            f.write('{} is available\n'.format(domains[i]))
         else:
             if(all(x==None for x in w.values())):
                 print("\033[33munknown\033[0m")
+                f.write('{} might be available\n'.format(domains[i]))
             else:
                 print("\033[31mregistered\033[0m")
+        f.close()
 
 if __name__ == "__main__":
     try:
