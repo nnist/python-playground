@@ -1,5 +1,6 @@
 # https://en.wikipedia.org/wiki/Domain_hack
 
+import datetime
 import whois
 import string
 import getopt
@@ -51,11 +52,13 @@ def main(argv):
 
     print("Checking %s domains..." % len(domains))
 
+    f = open('log.txt', 'a')
+    f.write('\n{}\n'.format(datetime.datetime.now()))
+
     # Try to get whois information for domain to see if it is available or not
     for i in range(len(domains)):
         print("[" + str(i+1) + "/" + str(len(domains)) + "] " + domains[i], end=" -> ", flush=True)
         # TODO Fix Socket Error: timed out
-        f = open('log.txt', 'a')
         try:
             w = whois.whois(domains[i])
             time.sleep(delay)
@@ -71,7 +74,8 @@ def main(argv):
                 f.write('{} might be available\n'.format(domains[i]))
             else:
                 print("\033[31mregistered\033[0m")
-        f.close()
+    
+    f.close()
 
 if __name__ == "__main__":
     try:
