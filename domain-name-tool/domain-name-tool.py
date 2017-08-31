@@ -18,12 +18,12 @@ def main(argv):
     parser.add_argument(
     "min",
     help="Minimum length of domain",
-    default=4
+    default=4, type=int
     )
     parser.add_argument(
     "max",
     help="Maximum length of domain",
-    default=5
+    default=5, type=int
     )
     parser.add_argument(
     "tld",
@@ -38,16 +38,16 @@ def main(argv):
     parser.add_argument(
     "-d",
     help="Delay",
-    dest="delay", default=2.0
+    dest="delay", default=2.0, type=float
     )
 
     args = parser.parse_args()
-    length_min = int(args.min)
-    length_max = int(args.max)
-    tld = str(args.tld)
-    dict_file = str(args.file)
+    length_min = args.min
+    length_max = args.max
+    tld = args.tld
+    dict_file = args.file
     chars = "abcdefghijklmnopqrstuvwxyz"
-    delay = float(args.delay)
+    delay = args.delay
 
     # Load dictionary, check for lines ending with tld
     domains = []
