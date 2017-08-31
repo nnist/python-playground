@@ -3,7 +3,7 @@
 import datetime
 import whois
 import string
-import getopt
+import argparse
 import sys
 import time
 import itertools
@@ -11,34 +11,43 @@ import urllib.request
 from urllib.error import URLError, HTTPError
 
 def main(argv):
-    length_min = 2
-    length_max = 4
-    tld = ".com"
-    dict_file = "dictionary.txt"
-    chars = "abcdefghijklmnopqrstuvwxyz"
-    delay = 2.0
+    parser = argparse.ArgumentParser(
+        description="""Finds domain hacks and tests them to see if
+        they are registered."""
+    )
+    parser.add_argument(
+    "min",
+    help="Minimum length of domain",
+    default=4
+    )
+    parser.add_argument(
+    "max",
+    help="Maximum length of domain",
+    default=5
+    )
+    parser.add_argument(
+    "tld",
+    help="Top level domain to use",
+    default=".com"
+    )
+    parser.add_argument(
+    "-f",
+    help="Dictionary file to use",
+    dest="file", default="dictionary.txt"
+    )
+    parser.add_argument(
+    "-d",
+    help="Delay",
+    dest="delay", default=2.0
+    )
 
-    try:
-        opts, args = getopt.getopt(argv,"hl:L:t:c:f:d:",["length-min=","length-max","tld=", "chars=", "file=", "delay="])
-    except getopt.GetoptError:
-        print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars> -f <file> -d <delay>')
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print('usage: domain-checker.py -l <min> -L <max> -t <tld> -c <chars> -f <file> -d <delay>')
-            sys.exit()
-        elif opt in ("-l", "--length-min"):
-            length_min = int(arg)
-        elif opt in ("-L", "--length-max"):
-            length_max = int(arg)
-        elif opt in ("-t", "--tld"):
-            tld = str(arg)
-        elif opt in ("-c", "--chars"):
-            chars = str(arg)
-        elif opt in ("-f", "--file"):
-            dict_file = str(arg)
-        elif opt in ("-d", "--delay"):
-            delay = float(arg)
+    args = parser.parse_args()
+    length_min = int(args.min)
+    length_max = int(args.max)
+    tld = str(args.tld)
+    dict_file = str(args.file)
+    chars = "abcdefghijklmnopqrstuvwxyz"
+    delay = float(args.delay)
 
     # Load dictionary, check for lines ending with tld
     domains = []
