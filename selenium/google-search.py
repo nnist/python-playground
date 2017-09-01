@@ -10,12 +10,17 @@ browser.get('https://google.com')
 form = browser.find_element_by_id("lst-ib")
 form.send_keys("""translate""" + Keys.RETURN)
 time.sleep(1)
-form = browser.find_element_by_id("tw-source-text-ta")
-form.send_keys("fuck you lol")
 
+form = browser.find_element_by_id("tw-source-text-ta")
+form.send_keys("hello there")
 voice_button = browser.find_element_by_id("tw-src-spkr-button")
 voice_button.send_keys(Keys.RETURN)
-time.clockl
-time.sleep(5)
-time.sleep
+time.sleep(1.5)
+
+form.clear()
+form.send_keys("i am a robot")
+voice_button = browser.find_element_by_id("tw-src-spkr-button")
+voice_button.send_keys(Keys.RETURN)
+time.sleep(1.5)
+
 browser.quit()
