@@ -2,39 +2,85 @@ import random
 import time
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
+import argparse
+import sys
 
-browser = webdriver.Firefox()
+def main(argv):
+    parser = argparse.ArgumentParser(
+        description="""Translates text over and over using Google translate"""
+    )
+    parser.add_argument(
+    "text",
+    help="Text to translate"
+    )
+    parser.add_argument(
+    "-i", "--iterations",
+    help="Number of iterations",
+    default=5, type=int
+    )
 
-browser.get('https://translate.google.com/')
-#assert 'Google' in browser.title
+    args = parser.parse_args()
 
-# Enter text into source field
-form = browser.find_element_by_id("source")
-form.send_keys("""Ik ben een vriendelijke robot die dingen doet met Google translate.""" + Keys.RETURN)
-time.sleep(1)
+    browser = webdriver.Firefox()
 
-# Copy translated text
-result_text = browser.find_element_by_id("result_box")
-result_text.send_keys(Keys.CONTROL, 'c')
-time.sleep(0.5)
+    browser.get('https://translate.google.com/')
+    #assert 'Google' in browser.title
+    
+    # Enter text into source field
+    form = browser.find_element_by_id("source")
+    form.send_keys(args.text + Keys.RETURN)
+    time.sleep(1)
+    
+    # Click listen button
+    listen_button = browser.find_element_by_id("gt-res-listen")
+    listen_button.click()
+    time.sleep(4)
+    
+    for i in range(args.iterations):
+        # Copy translated text
+        result_text = browser.find_element_by_id("result_box")
+        result_text.send_keys(Keys.CONTROL, 'c')
+        time.sleep(0.5)
+        print("Translated text: {}".format(result_text.text))
+        
+        # Paste translated text into source field
+        form.clear()
+        form.send_keys(Keys.CONTROL, 'v')
+        time.sleep(1)
+        
+        # Click dropdown menu
+        dropdown = browser.find_element_by_id("gt-tl-gms")
+        dropdown.click()
+        
+        # Click random language
+        group = browser.find_element_by_id("goog-menuitem-group-{}".format(1 + random.randrange(6)))
+        languages = group.find_elements_by_class_name("goog-menuitem")
+        language = languages[random.randrange(len(languages))]
+        print("Selected {}".format(language.text))
+        language.click()
+        time.sleep(1)
+    
+    # Click dropdown, select English
+    dropdown = browser.find_element_by_id("gt-tl-gms")
+    dropdown.click()
+    time.sleep(1)
+    language_english = browser.find_element_by_id(":3j")
+    language_english.click()
+    time.sleep(2)
+    
+    # Click listen button
+    listen_button = browser.find_element_by_id("gt-res-listen")
+    listen_button.click()
+    time.sleep(7)
+    
+    browser.quit()
 
-# Paste translated text into source field
-form.send_keys(Keys.CONTROL, 'v')
-time.sleep(1)
-
-# Click dropdown menu
-dropdown = browser.find_element_by_id("gt-tl-gms")
-dropdown.click()
-
-# 8 groups
-# Click random language
-random_number = random.randrange(5)
-group = browser.find_element_by_id("goog-menuitem-group-{}".format(random_number))
-print(random_number)
-languages = group.find_elements_by_class_name("goog-menuitem")
-#len(languages) > 8
-
-#print(languages)
-#time.sleep(1)
-
-#browser.quit()
+if __name__ == "__main__":
+    try:
+        main(sys.argv[1:])
+    except KeyboardInterrupt:
+        print('Interrupted by user.')
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)
