@@ -10,8 +10,9 @@ def main(argv):
         description="""Translates text over and over using Google translate"""
     )
     parser.add_argument(
-    "text",
-    help="Text to translate"
+    "-t", "--text",
+    help="Text to translate",
+    default="Did you see that ludicrous display last night?"
     )
     parser.add_argument(
     "-i", "--iterations",
