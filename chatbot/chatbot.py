@@ -21,7 +21,8 @@ bot = ChatBot("Terminal",
 )
 
 bot.train('chatterbot.corpus.english.greetings',
-    'chatterbot.corpus.english.conversations'
+    'chatterbot.corpus.english.conversations',
+    'chatterbot.corpus.english'
 )
 
 DEFAULT_SESSION_ID = bot.default_session.id
