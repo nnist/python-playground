@@ -1,3 +1,5 @@
+#!/usr/bin/env python3
+
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
 import argparse
@@ -8,7 +10,7 @@ import os
 def send_message(element, keys):
     for key in keys:
         element.send_keys(key)
-        time.sleep(0.1)
+        time.sleep(0.05)
     element.send_keys(Keys.RETURN)
 
 def close_all_popups(driver):
@@ -28,27 +30,45 @@ def main(argv):
     text_button = browser.find_element_by_id("textbtn")
     text_button.click()
 
-    time.sleep(2)
+    time.sleep(.5)
 
     field = browser.find_element_by_css_selector(".chatmsg")
    
-    print("You're now chatting with a random stranger. Say hi!")
-    text = input("")
+    send_message(field, "hi")
 
-    send_message(field, text)
-    time.sleep(0.2)
-    send_message(field, "i like kittens")
-    time.sleep(0.1)
-    send_message(field, "goodbye.")
+    #print("You're now chatting with a random stranger. Say hi!")
+    #text = input("You: ")
+    
+    # TODO allow input
+
+    log_box = browser.find_element_by_css_selector(".logbox")
    
+    log = []
+
+    while True:
+        # Retrieve log items
+        log_items = browser.find_elements_by_css_selector(".logitem")
+        for item in log_items:
+            # Add item to log if it doesn't exist yet
+            if item not in log:
+                log.append(item)
+                print(item.text)
+                if not item.text.startswith("You"):
+                    send_message(field, item.text)
+        time.sleep(0.5)
+    
+    #send_message(field, "i like kittens")
+    #time.sleep(0.1)
+    #send_message(field, "goodbye.")
+
+    # Disconnect
     disconnect_button = browser.find_element_by_css_selector(".disconnectbtn")
     disconnect_button.click()
     time.sleep(0.1)
     disconnect_button.click()
+    
     time.sleep(1)
-
     browser.quit()
-    sys.exit(0)
 
 if __name__ == "__main__":
     try:
