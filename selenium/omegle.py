@@ -43,12 +43,11 @@ bot_messages = ["hi! i'm jennifer", "hiiiiiiiii girl", "hello, im lucy",
 def check_bot_message(message):
     # Check if message is something a bot would say
     message = message.lower()
-    
     for bot_message in bot_messages:
         if message.startswith(bot_message) or bot_message in message:
             return True
-        else:
-            return False
+    
+    return False
 
 def main(argv):
     print("Starting browsers...")
@@ -87,17 +86,18 @@ def main(argv):
                     print("\033[33mError\033[0m: Session 1 requires captcha to be solved.")
                     messages1.append(msg)
                
-                if check_bot_message(msg[10:]):
-                    print("\033[2mSession 1: Bot detected. Disconnected, finding a new partner...\033[0m")
-                    messages1 = []
-                    disconnect(browser1)
-                    connect(browser1)
-                    stranger_1_msg_time = None
-                elif msg.startswith("Stranger:"):
-                    messages1.append(msg)
-                    print("\033[31mStranger 1\033[0m: {}".format(msg[10:]))
-                    send_message(browser2, msg[10:])
-                    stranger_1_msg_time = time.time()
+                if msg.startswith("Stranger:"):
+                    if check_bot_message(msg[10:]):
+                        print("\033[2mSession 1: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(msg[10:]))
+                        messages1 = []
+                        disconnect(browser1)
+                        connect(browser1)
+                        stranger_1_msg_time = None
+                    else:
+                        messages1.append(msg)
+                        print("\033[31mStranger 1\033[0m: {}".format(msg[10:]))
+                        send_message(browser2, msg[10:])
+                        stranger_1_msg_time = time.time()
                 elif msg == "Stranger has disconnected.":
                     print("\033[2mStranger 1 has disconnected, finding a new partner...\033[0m")
                     messages1 = []
@@ -125,17 +125,18 @@ def main(argv):
                     print("\033[33mError\033[0m: Session 2 requires captcha to be solved.")
                     messages2.append(msg)
                 
-                if check_bot_message(msg[10:]):
-                    print("\033[2mSession 2: Bot detected. Disconnected, finding a new partner...\033[0m")
-                    messages2 = []
-                    disconnect(browser2)
-                    connect(browser2)
-                    stranger_2_msg_time = None
-                elif msg.startswith("Stranger:"):
-                    messages2.append(msg)
-                    print("\033[32mStranger 2\033[0m: {}".format(msg[10:]))
-                    send_message(browser1, msg[10:])
-                    stranger_2_msg_time = time.time()
+                if msg.startswith("Stranger:"):
+                    if check_bot_message(msg[10:]):
+                        print("\033[2mSession 2: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(msg[10:]))
+                        messages2 = []
+                        disconnect(browser2)
+                        connect(browser2)
+                        stranger_2_msg_time = None
+                    else:
+                        messages2.append(msg)
+                        print("\033[32mStranger 2\033[0m: {}".format(msg[10:]))
+                        send_message(browser1, msg[10:])
+                        stranger_2_msg_time = time.time()
                 elif msg == "Stranger has disconnected.":
                     print("\033[2mStranger 2 has disconnected, finding a new partner...\033[0m")
                     messages2 = []
