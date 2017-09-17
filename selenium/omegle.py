@@ -74,19 +74,28 @@ def main(argv):
     stranger_2_msg_time = None
 
     while True:
+        # Check if captcha has appeared
+        try:
+            recaptcha_area = browser1.find_element_by_css_selector(".logitem > iframe:nth-child(1)")
+        except:
+            pass
+        else:
+            print("\033[33mError\033[0m: Session 1 requires captcha to be solved.")
+            messages1.append(msg)
+        
+        # Check if captcha has appeared
+        try:
+            recaptcha_area = browser2.find_element_by_css_selector(".logitem > iframe:nth-child(1)")
+        except:
+            pass
+        else:
+            print("\033[33mError\033[0m: Session 2 requires captcha to be solved.")
+            messages2.append(msg)
+
         # Check for new messages in browser 1
         msg1 = get_messages(browser1)
         for msg in msg1:
             if msg not in messages1:
-                # Check if captcha has appeared
-                try:
-                    recaptcha_area = browser1.find_element_by_css_selector(".logitem > iframe:nth-child(1)")
-                except:
-                    pass
-                else:
-                    print("\033[33mError\033[0m: Session 1 requires captcha to be solved.")
-                    messages1.append(msg)
-              
                 # Handle message
                 if msg.startswith("Stranger:"):
                     if check_bot_message(msg[10:]):
@@ -119,15 +128,6 @@ def main(argv):
         msg2 = get_messages(browser2)
         for msg in msg2:
             if msg not in messages2:
-                # Check if captcha has appeared
-                try:
-                    recaptcha_area = browser2.find_element_by_css_selector(".logitem > iframe:nth-child(1)")
-                except:
-                    pass
-                else:
-                    print("\033[33mError\033[0m: Session 2 requires captcha to be solved.")
-                    messages2.append(msg)
-                
                 # Handle message
                 if msg.startswith("Stranger:"):
                     if check_bot_message(msg[10:]):
