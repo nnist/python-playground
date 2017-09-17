@@ -35,19 +35,21 @@ def disconnect(browser):
     disconnect_button.click()
 
 def main(argv):
+    print("Starting browsers...")
     browser1 = webdriver.Firefox()
     browser1.get('http://omegle.com/')
     browser2 = webdriver.Firefox()
     browser2.get('http://omegle.com/')
-   
     assert "Omegle" in browser1.title
     assert "Omegle" in browser2.title
+    print("Browsers started.")
 
     # Click text chat button
     text_button = browser1.find_element_by_id("textbtn")
     text_button.click()
     text_button = browser2.find_element_by_id("textbtn")
     text_button.click()
+    print("Started chat sessions.")
 
     messages1 = []
     messages2 = []
