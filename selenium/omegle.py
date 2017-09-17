@@ -65,6 +65,9 @@ def main(argv):
                 elif msg == "Stranger has disconnected." or msg == "You have disconnected.":
                     print("\033[2mStranger 1 has disconnected, finding a new partner...\033[0m")
                     connect(browser1)
+                elif msg.startswith("You're now chatting with a random stranger. Say hi!"):
+                    print("\033[2mStranger 1 connected..\033[0m")
+                    messages1.append(msg)
         
         msg2 = get_messages(browser2)
         for msg in msg2:
@@ -76,6 +79,9 @@ def main(argv):
                 elif msg == "Stranger has disconnected." or msg == "You have disconnected.":
                     print("\033[2mStranger 2 has disconnected, finding a new partner...\033[0m")
                     connect(browser2)
+                elif msg.startswith("You're now chatting with a random stranger. Say hi!"):
+                    print("\033[2mStranger 1 connected..\033[0m")
+                    messages2.append(msg)
 
         time.sleep(0.5)
 
