@@ -88,7 +88,7 @@ def main(argv):
                     messages1.append(msg)
                
                 if check_bot_message(msg[10:]):
-                    print("\033[2mBot detected. Disconnected, finding a new partner...\033[0m")
+                    print("\033[2mSession 1: Bot detected. Disconnected, finding a new partner...\033[0m")
                     messages1 = []
                     disconnect(browser1)
                     connect(browser1)
@@ -126,7 +126,7 @@ def main(argv):
                     messages2.append(msg)
                 
                 if check_bot_message(msg[10:]):
-                    print("\033[2mBot detected. Disconnected, finding a new partner...\033[0m")
+                    print("\033[2mSession 2: Bot detected. Disconnected, finding a new partner...\033[0m")
                     messages2 = []
                     disconnect(browser2)
                     connect(browser2)
