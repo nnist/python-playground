@@ -7,68 +7,87 @@ import sys
 import time
 import os
 
-def send_message(element, keys):
+def send_message(browser, keys):
+    element = browser.find_element_by_css_selector(".chatmsg")
     for key in keys:
         element.send_keys(key)
-        time.sleep(0.05)
+        #time.sleep(0.02)
     element.send_keys(Keys.RETURN)
 
-def close_all_popups(driver):
-    driver.window_handles
-    for h in driver.window_handles[1:]:
-        driver.switch_to_window(h)
-        driver.close()
-    driver.switch_to_window(driver.window_handles[0])
+def get_messages(browser):
+    messages = []
+    log_items = browser.find_elements_by_css_selector(".logitem")
+    for item in log_items:
+        try:
+            messages.append(item.text)
+        except:
+            pass
+    return messages
 
-def main(argv):
-    browser = webdriver.Firefox()
+def connect(browser):
+    disconnect_button = browser.find_element_by_css_selector(".disconnectbtn")
+    disconnect_button.click()
 
-    browser.get('http://omegle.com/')
-   
-    assert "Omegle" in browser.title
-
-    text_button = browser.find_element_by_id("textbtn")
-    text_button.click()
-
-    time.sleep(.5)
-
-    field = browser.find_element_by_css_selector(".chatmsg")
-   
-    send_message(field, "hi")
-
-    #print("You're now chatting with a random stranger. Say hi!")
-    #text = input("You: ")
-    
-    # TODO allow input
-
-    log_box = browser.find_element_by_css_selector(".logbox")
-   
-    log = []
-
-    while True:
-        # Retrieve log items
-        log_items = browser.find_elements_by_css_selector(".logitem")
-        for item in log_items:
-            # Add item to log if it doesn't exist yet
-            if item not in log:
-                log.append(item)
-                print(item.text)
-                if not item.text.startswith("You"):
-                    send_message(field, item.text)
-        time.sleep(0.5)
-    
-    #send_message(field, "i like kittens")
-    #time.sleep(0.1)
-    #send_message(field, "goodbye.")
-
-    # Disconnect
+def disconnect(browser):
     disconnect_button = browser.find_element_by_css_selector(".disconnectbtn")
     disconnect_button.click()
     time.sleep(0.1)
     disconnect_button.click()
+
+def main(argv):
+    browser1 = webdriver.Firefox()
+    browser1.get('http://omegle.com/')
+    browser2 = webdriver.Firefox()
+    browser2.get('http://omegle.com/')
+   
+    assert "Omegle" in browser1.title
+    assert "Omegle" in browser2.title
+
+    # Click text chat button
+    text_button = browser1.find_element_by_id("textbtn")
+    text_button.click()
+    text_button = browser2.find_element_by_id("textbtn")
+    text_button.click()
+
+    messages1 = []
+    messages2 = []
+
+    # TODO filter out bots
+    # TODO filter out non-responsive
+    # TODO print interesting output
+    while True:
+        msg1 = get_messages(browser1)
+        for msg in msg1:
+            if msg not in messages1:
+                if msg.startswith("Stranger:"):
+                    messages1.append(msg)
+                    send_message(browser2, msg[10:])
+                elif msg == "Stranger has disconnected." or msg == "You have disconnected.":
+                    connect(browser1)
+        
+        msg2 = get_messages(browser2)
+        for msg in msg2:
+            if msg not in messages2:
+                if msg.startswith("Stranger:"):
+                    messages2.append(msg)
+                    send_message(browser1, msg[10:])
+                elif msg == "Stranger has disconnected." or msg == "You have disconnected.":
+                    connect(browser2)
+
+        time.sleep(0.5)
+
+    disconnect(browser1)
+    disconnect(browser2)
+
+    #time.sleep(5)
+
+    #messages = get_messages(browser)
+    #print(messages)
+
+    #disconnect(browser)
     
-    time.sleep(1)
-    browser.quit()
+    #time.sleep(1)
+    #browser.quit()
 
 if __name__ == "__main__":
     try:
