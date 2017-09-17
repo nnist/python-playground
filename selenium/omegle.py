@@ -74,7 +74,6 @@ def main(argv):
     stranger_1_msg_time = None
     stranger_2_msg_time = None
 
-    # TODO filter out bots
     while True:
         msg1 = get_messages(browser1)
         for msg in msg1:
