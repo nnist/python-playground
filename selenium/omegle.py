@@ -54,8 +54,11 @@ def main(argv):
     messages1 = []
     messages2 = []
 
+    timeout = 60
+    stranger_1_msg_time = None
+    stranger_2_msg_time = None
+
     # TODO filter out bots
-    # TODO reconnect on timeout
     while True:
         msg1 = get_messages(browser1)
         for msg in msg1:
@@ -64,12 +67,15 @@ def main(argv):
                     messages1.append(msg)
                     print("\033[31mStranger 1\033[0m: {}".format(msg[10:]))
                     send_message(browser2, msg[10:])
+                    stranger_1_msg_time = time.time()
                 elif msg == "Stranger has disconnected." or msg == "You have disconnected.":
                     print("\033[2mStranger 1 has disconnected, finding a new partner...\033[0m")
                     connect(browser1)
+                    stranger_1_msg_time = None
                 elif msg.startswith("You're now chatting with a random stranger. Say hi!"):
                     print("\033[2mStranger 1 connected.\033[0m")
                     messages1.append(msg)
+                    stranger_1_msg_time = time.time()
         
         msg2 = get_messages(browser2)
         for msg in msg2:
@@ -78,14 +84,29 @@ def main(argv):
                     messages2.append(msg)
                     print("\033[32mStranger 2\033[0m: {}".format(msg[10:]))
                     send_message(browser1, msg[10:])
+                    stranger_2_msg_time = time.time()
                 elif msg == "Stranger has disconnected." or msg == "You have disconnected.":
                     print("\033[2mStranger 2 has disconnected, finding a new partner...\033[0m")
                     connect(browser2)
+                    stranger_2_msg_time = None
                 elif msg.startswith("You're now chatting with a random stranger. Say hi!"):
                     print("\033[2mStranger 2 connected.\033[0m")
                     messages2.append(msg)
+                    stranger_2_msg_time = None
 
         time.sleep(0.5)
+
+        # Check for timeouts
+        if stranger_1_msg_time is not None and time.time() - stranger_1_msg_time > timeout:
+            print("Session 1 timed out, connecting to someone else.")
+            disconnect(browser1)
+            connect(browser1)
+            stranger_1_msg_time = None
+        if stranger_2_msg_time is not None and time.time() - stranger_2_msg_time > timeout:
+            print("Session 2 timed out, connecting to someone else..")
+            disconnect(browser2)
+            connect(browser2)
+            stranger_2_msg_time = None
 
     disconnect(browser1)
     disconnect(browser2)
