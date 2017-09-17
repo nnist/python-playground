@@ -63,6 +63,14 @@ def main(argv):
         msg1 = get_messages(browser1)
         for msg in msg1:
             if msg not in messages1:
+                # Check if captcha has appeared
+                try:
+                    recaptcha_area = browser1.find_element_by_css_selector(".logitem > iframe:nth-child(1)")
+                except:
+                    pass
+                else:
+                    print("\033[33mError\033[0m: Session 1 requires captcha to be solved.")
+                    messages1.append(msg)
                 if msg.startswith("Stranger:"):
                     messages1.append(msg)
                     print("\033[31mStranger 1\033[0m: {}".format(msg[10:]))
@@ -80,6 +88,14 @@ def main(argv):
         msg2 = get_messages(browser2)
         for msg in msg2:
             if msg not in messages2:
+                # Check if captcha has appeared
+                try:
+                    recaptcha_area = browser2.find_element_by_css_selector(".logitem > iframe:nth-child(1)")
+                except:
+                    pass
+                else:
+                    print("\033[33mError\033[0m: Session 2 requires captcha to be solved.")
+                    messages2.append(msg)
                 if msg.startswith("Stranger:"):
                     messages2.append(msg)
                     print("\033[32mStranger 2\033[0m: {}".format(msg[10:]))
