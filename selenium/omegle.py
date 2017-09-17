@@ -54,15 +54,16 @@ def main(argv):
 
     # TODO filter out bots
     # TODO reconnect on timeout
-    # TODO print interesting output
     while True:
         msg1 = get_messages(browser1)
         for msg in msg1:
             if msg not in messages1:
                 if msg.startswith("Stranger:"):
                     messages1.append(msg)
+                    print("\033[31mStranger 1\033[0m: {}".format(msg[10:]))
                     send_message(browser2, msg[10:])
                 elif msg == "Stranger has disconnected." or msg == "You have disconnected.":
+                    print("\033[2mStranger 1 has disconnected, finding a new partner...\033[0m")
                     connect(browser1)
         
         msg2 = get_messages(browser2)
@@ -70,8 +71,10 @@ def main(argv):
             if msg not in messages2:
                 if msg.startswith("Stranger:"):
                     messages2.append(msg)
+                    print("\033[32mStranger 2\033[0m: {}".format(msg[10:]))
                     send_message(browser1, msg[10:])
                 elif msg == "Stranger has disconnected." or msg == "You have disconnected.":
+                    print("\033[2mStranger 2 has disconnected, finding a new partner...\033[0m")
                     connect(browser2)
 
         time.sleep(0.5)
