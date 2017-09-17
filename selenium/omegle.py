@@ -53,7 +53,7 @@ def main(argv):
     messages2 = []
 
     # TODO filter out bots
-    # TODO filter out non-responsive
+    # TODO reconnect on timeout
     # TODO print interesting output
     while True:
         msg1 = get_messages(browser1)
