@@ -155,13 +155,13 @@ def main(argv):
 
         # Check for timeouts
         if stranger_1_msg_time is not None and time.time() - stranger_1_msg_time > timeout:
-            print("Session 1 timed out, connecting to someone else.")
+            print("\033[2mSession 1 timed out, connecting to someone else.\033[0m")
             messages1 = []
             disconnect(browser1)
             connect(browser1)
             stranger_1_msg_time = None
         if stranger_2_msg_time is not None and time.time() - stranger_2_msg_time > timeout:
-            print("Session 2 timed out, connecting to someone else..")
+            print("\033[2mSession 2 timed out, connecting to someone else..\033[0m")
             messages2 = []
             disconnect(browser2)
             connect(browser2)
