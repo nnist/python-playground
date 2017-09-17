@@ -74,6 +74,7 @@ def main(argv):
     stranger_2_msg_time = None
 
     while True:
+        # Check for new messages in browser 1
         msg1 = get_messages(browser1)
         for msg in msg1:
             if msg not in messages1:
@@ -85,7 +86,8 @@ def main(argv):
                 else:
                     print("\033[33mError\033[0m: Session 1 requires captcha to be solved.")
                     messages1.append(msg)
-               
+              
+                # Handle message
                 if msg.startswith("Stranger:"):
                     if check_bot_message(msg[10:]):
                         print("\033[2mSession 1: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(msg[10:]))
@@ -113,6 +115,7 @@ def main(argv):
                     messages1.append(msg)
                     stranger_1_msg_time = time.time()
         
+        # Check for new messages in browser 2
         msg2 = get_messages(browser2)
         for msg in msg2:
             if msg not in messages2:
@@ -125,6 +128,7 @@ def main(argv):
                     print("\033[33mError\033[0m: Session 2 requires captcha to be solved.")
                     messages2.append(msg)
                 
+                # Handle message
                 if msg.startswith("Stranger:"):
                     if check_bot_message(msg[10:]):
                         print("\033[2mSession 2: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(msg[10:]))
