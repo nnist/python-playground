@@ -33,6 +33,22 @@ def disconnect(browser):
     disconnect_button.click()
     time.sleep(0.1)
     disconnect_button.click()
+    
+bot_messages = ["hi! i'm jennifer", "hiiiiiiiii girl", "hello, im lucy",
+    "waanna shareg phoatos ?", "wnant 2 shpare pix ?", "hi hun, ",
+    "are you sick of", "19f and u?", "21 female", "waanna pswap pix ?",
+    "youre the person i was just chatting to ????",
+    "brunette girl here wanna chat?", "hit me up on", "woman 22", ".pro/"]
+
+def check_bot_message(message):
+    # Check if message is something a bot would say
+    message = message.lower()
+    
+    for bot_message in bot_messages:
+        if message.startswith(bot_message) or bot_message in message:
+            return True
+        else:
+            return False
 
 def main(argv):
     print("Starting browsers...")
@@ -71,7 +87,14 @@ def main(argv):
                 else:
                     print("\033[33mError\033[0m: Session 1 requires captcha to be solved.")
                     messages1.append(msg)
-                if msg.startswith("Stranger:"):
+               
+                if check_bot_message(msg[10:]):
+                    print("\033[2mBot detected. Disconnected, finding a new partner...\033[0m")
+                    messages1 = []
+                    disconnect(browser1)
+                    connect(browser1)
+                    stranger_1_msg_time = None
+                elif msg.startswith("Stranger:"):
                     messages1.append(msg)
                     print("\033[31mStranger 1\033[0m: {}".format(msg[10:]))
                     send_message(browser2, msg[10:])
@@ -97,7 +120,14 @@ def main(argv):
                 else:
                     print("\033[33mError\033[0m: Session 2 requires captcha to be solved.")
                     messages2.append(msg)
-                if msg.startswith("Stranger:"):
+                
+                if check_bot_message(msg[10:]):
+                    print("\033[2mBot detected. Disconnected, finding a new partner...\033[0m")
+                    messages2 = []
+                    disconnect(browser2)
+                    connect(browser2)
+                    stranger_2_msg_time = None
+                elif msg.startswith("Stranger:"):
                     messages2.append(msg)
                     print("\033[32mStranger 2\033[0m: {}".format(msg[10:]))
                     send_message(browser1, msg[10:])
