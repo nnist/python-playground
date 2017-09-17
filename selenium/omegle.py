@@ -78,6 +78,7 @@ def main(argv):
                     stranger_1_msg_time = time.time()
                 elif msg == "Stranger has disconnected." or msg == "You have disconnected.":
                     print("\033[2mStranger 1 has disconnected, finding a new partner...\033[0m")
+                    messages1 = []
                     connect(browser1)
                     stranger_1_msg_time = None
                 elif msg.startswith("You're now chatting with a random stranger. Say hi!"):
@@ -103,6 +104,7 @@ def main(argv):
                     stranger_2_msg_time = time.time()
                 elif msg == "Stranger has disconnected." or msg == "You have disconnected.":
                     print("\033[2mStranger 2 has disconnected, finding a new partner...\033[0m")
+                    messages2 = []
                     connect(browser2)
                     stranger_2_msg_time = None
                 elif msg.startswith("You're now chatting with a random stranger. Say hi!"):
