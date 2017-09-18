@@ -50,6 +50,20 @@ def check_bot_message(message):
     return False
 
 def main(argv):
+    parser = argparse.ArgumentParser(description='Connect two people on Omegle to eachother.')
+    parser.add_argument(
+        '-v', '--verbose',
+        help='Be verbose',
+        action='store_true'
+    )
+    parser.add_argument(
+        '-t', '--timeout',
+        help='Timeout idle chats after t seconds',
+        type=int, default=60
+    )
+
+    args = parser.parse_args()
+    
     print("Starting browsers...")
     browser1 = webdriver.Firefox()
     browser1.get('http://omegle.com/')
@@ -69,7 +83,7 @@ def main(argv):
     messages1 = []
     messages2 = []
 
-    timeout = 60
+    timeout = args.timeout
     stranger_1_msg_time = None
     stranger_2_msg_time = None
 
