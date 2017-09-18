@@ -30,10 +30,13 @@ def connect(browser):
 
 def disconnect(browser):
     disconnect_button = browser.find_element_by_css_selector(".disconnectbtn")
-    disconnect_button.click()
-    time.sleep(0.1)
-    disconnect_button.click()
-    
+    try:
+        disconnect_button.click()
+        time.sleep(0.1)
+        disconnect_button.click()
+    except:
+        pass
+
 bot_messages = ["hi! i'm jennifer", "hiiiiiiiii girl", "hello, im lucy",
     "waanna shareg phoatos ?", "wnant 2 shpare pix ?", "hi hun, ",
     "are you sick of", "19f and u?", "21 female", "waanna pswap pix ?",
