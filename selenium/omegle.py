@@ -53,6 +53,12 @@ def check_bot_message(message):
     return False
 
 def main(argv):
+    # TODO Sometimes stranger doesn't say anything at all; make that timeout too
+    # TODO Option to greet on connect
+    # TODO Fix 'Connection refused' error on Ctrl-C
+    # TODO Print timeout message on timeout, instead of 'manually connected'
+    # TODO Log messages
+    # TODO Count similar messages for bot checking
     parser = argparse.ArgumentParser(description='Connect two people on Omegle to eachother.')
     parser.add_argument(
         '-v', '--verbose',
