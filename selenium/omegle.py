@@ -40,8 +40,12 @@ def disconnect(browser):
 bot_messages = ["hi! i'm jennifer", "hiiiiiiiii girl", "hello, im lucy",
     "waanna shareg phoatos ?", "wnant 2 shpare pix ?", "hi hun, ",
     "are you sick of", "19f and u?", "21 female", "waanna pswap pix ?",
-    "youre the person i was just chatting to ????",
-    "brunette girl here wanna chat?", "hit me up on", "woman 22", ".pro/"]
+    "youre the person i was just chatting to ????", "19 female", "bit.ly"
+    "ur the person i was just talking to ????", "girl 25"
+    "brunette girl here wanna chat?", "hit me up on", "woman 22", ".pro/",
+    "im brooke,", "chick here..", "20 female", "18 female", ".site/",
+    "heya! i'm jennifer", "heya! my name is", "damn a-girl0)", "got a -(kik)-"
+    "18 f wanna talk??", "check this site adult-omegle.com"]
 
 def check_bot_message(message):
     # Check if message is something a bot would say
