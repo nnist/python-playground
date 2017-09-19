@@ -52,6 +52,44 @@ def check_bot_message(message):
     
     return False
 
+def handle_log_items(browser, other_browser, session_num, prev_log_items):
+    log_items = browser.find_elements_by_css_selector(".logitem")
+    new_log_items = list(set(log_items) - set(prev_log_items))
+
+    for item in new_log_items:
+        try:
+            text = item.text
+        except:
+            print("item.text no longer exists lol")
+        else:
+            if text == "You have disconnected.": # Manually disconnected
+                print("\033[2mSession {} manually disconnected. Finding a new partner...\033[0m".format(session_num))
+                prev_log_items = []
+                connect(browser)
+                break
+            elif text == "Stranger has disconnected.": # Stranger disconnected
+                print("\033[2mStranger {} has disconnected, finding a new partner...\033[0m".format(session_num))
+                prev_log_items = []
+                connect(browser)
+                break
+            elif text == "You're now chatting with a random stranger. Say hi!":
+                print("\033[2mStranger {} connected.\033[0m".format(session_num))
+                # TODO Update timeout
+            elif text.startswith("Stranger:"): # Stranger said something
+                message = text[10:]
+                if check_bot_message(message):
+                    print("\033[2mSession {}: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(session_num, message))
+                    prev_log_items = []
+                    disconnect(browser)
+                    connect(browser)
+                    break
+                else:
+                    print("\033[31mStranger {}\033[0m: {}".format(session_num, message))
+                    # TODO Update timeout
+                    send_message(other_browser, message)
+
+    return log_items
+
 def main(argv):
     # TODO Sometimes stranger doesn't say anything at all; make that timeout too
     # TODO Option to greet on connect
@@ -97,103 +135,112 @@ def main(argv):
     stranger_2_msg_time = None
 
     while True:
-        # Check if captcha has appeared
-        try:
-            recaptcha_area = browser1.find_element_by_css_selector(".logitem > iframe:nth-child(1)")
-        except:
-            pass
-        else:
-            print("\033[33mError\033[0m: Session 1 requires captcha to be solved.")
-            messages1.append(msg)
+        # TODO Check both browsers for captcha on page
         
-        # Check if captcha has appeared
-        try:
-            recaptcha_area = browser2.find_element_by_css_selector(".logitem > iframe:nth-child(1)")
-        except:
-            pass
-        else:
-            print("\033[33mError\033[0m: Session 2 requires captcha to be solved.")
-            messages2.append(msg)
+        messages1 = handle_log_items(browser1, browser2, 1, messages1)
 
-        # Check for new messages in browser 1
-        msg1 = get_messages(browser1)
-        for msg in msg1:
-            if msg not in messages1:
-                # Handle message
-                if msg.startswith("Stranger:"):
-                    if check_bot_message(msg[10:]):
-                        print("\033[2mSession 1: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(msg[10:]))
-                        messages1 = []
-                        disconnect(browser1)
-                        connect(browser1)
-                        stranger_1_msg_time = None
-                    else:
-                        messages1.append(msg)
-                        print("\033[31mStranger 1\033[0m: {}".format(msg[10:]))
-                        send_message(browser2, msg[10:])
-                        stranger_1_msg_time = time.time()
-                elif msg == "Stranger has disconnected.":
-                    print("\033[2mStranger 1 has disconnected, finding a new partner...\033[0m")
-                    messages1 = []
-                    connect(browser1)
-                    stranger_1_msg_time = None
-                elif msg == "You have disconnected.":
-                    print("\033[2mSession 1 manually disconnected. Finding a new partner...\033[0m")
-                    messages1 = []
-                    connect(browser1)
-                    stranger_1_msg_time = None
-                elif msg.startswith("You're now chatting with a random stranger. Say hi!"):
-                    print("\033[2mStranger 1 connected.\033[0m")
-                    messages1.append(msg)
-                    stranger_1_msg_time = time.time()
-        
-        # Check for new messages in browser 2
-        msg2 = get_messages(browser2)
-        for msg in msg2:
-            if msg not in messages2:
-                # Handle message
-                if msg.startswith("Stranger:"):
-                    if check_bot_message(msg[10:]):
-                        print("\033[2mSession 2: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(msg[10:]))
-                        messages2 = []
-                        disconnect(browser2)
-                        connect(browser2)
-                        stranger_2_msg_time = None
-                    else:
-                        messages2.append(msg)
-                        print("\033[32mStranger 2\033[0m: {}".format(msg[10:]))
-                        send_message(browser1, msg[10:])
-                        stranger_2_msg_time = time.time()
-                elif msg == "Stranger has disconnected.":
-                    print("\033[2mStranger 2 has disconnected, finding a new partner...\033[0m")
-                    messages2 = []
-                    connect(browser2)
-                    stranger_2_msg_time = None
-                elif msg == "You have disconnected.":
-                    print("\033[2mSession 2 manually disconnected. Finding a new partner...\033[0m")
-                    messages2 = []
-                    connect(browser2)
-                    stranger_2_msg_time = None
-                elif msg.startswith("You're now chatting with a random stranger. Say hi!"):
-                    print("\033[2mStranger 2 connected.\033[0m")
-                    messages2.append(msg)
-                    stranger_2_msg_time = None
+        messages2 = handle_log_items(browser2, browser1, 2, messages2)
 
-        time.sleep(0.5)
+        # TODO Handle timeout
 
-        # Check for timeouts
-        if stranger_1_msg_time is not None and time.time() - stranger_1_msg_time > timeout:
-            print("\033[2mSession 1 timed out, connecting to someone else.\033[0m")
-            messages1 = []
-            disconnect(browser1)
-            connect(browser1)
-            stranger_1_msg_time = None
-        if stranger_2_msg_time is not None and time.time() - stranger_2_msg_time > timeout:
-            print("\033[2mSession 2 timed out, connecting to someone else..\033[0m")
-            messages2 = []
-            disconnect(browser2)
-            connect(browser2)
-            stranger_2_msg_time = None
+#    while True:
+#        # Check if captcha has appeared
+#        try:
+#            recaptcha_area = browser1.find_element_by_css_selector(".logitem > iframe:nth-child(1)")
+#        except:
+#            pass
+#        else:
+#            print("\033[33mError\033[0m: Session 1 requires captcha to be solved.")
+#            messages1.append(msg)
+#        
+#        # Check if captcha has appeared
+#        try:
+#            recaptcha_area = browser2.find_element_by_css_selector(".logitem > iframe:nth-child(1)")
+#        except:
+#            pass
+#        else:
+#            print("\033[33mError\033[0m: Session 2 requires captcha to be solved.")
+#            messages2.append(msg)
+#
+#        # Check for new messages in browser 1
+#        msg1 = get_messages(browser1)
+#        for msg in msg1:
+#            if msg not in messages1:
+#                # Handle message
+#                if msg.startswith("Stranger:"):
+#                    if check_bot_message(msg[10:]):
+#                        print("\033[2mSession 1: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(msg[10:]))
+#                        messages1 = []
+#                        disconnect(browser1)
+#                        connect(browser1)
+#                        stranger_1_msg_time = None
+#                    else:
+#                        messages1.append(msg)
+#                        print("\033[31mStranger 1\033[0m: {}".format(msg[10:]))
+#                        send_message(browser2, msg[10:])
+#                        stranger_1_msg_time = time.time()
+#                elif msg == "Stranger has disconnected.":
+#                    print("\033[2mStranger 1 has disconnected, finding a new partner...\033[0m")
+#                    messages1 = []
+#                    connect(browser1)
+#                    stranger_1_msg_time = None
+#                elif msg == "You have disconnected.":
+#                    print("\033[2mSession 1 manually disconnected. Finding a new partner...\033[0m")
+#                    messages1 = []
+#                    connect(browser1)
+#                    stranger_1_msg_time = None
+#                elif msg.startswith("You're now chatting with a random stranger. Say hi!"):
+#                    print("\033[2mStranger 1 connected.\033[0m")
+#                    messages1.append(msg)
+#                    stranger_1_msg_time = time.time()
+#        
+#        # Check for new messages in browser 2
+#        msg2 = get_messages(browser2)
+#        for msg in msg2:
+#            if msg not in messages2:
+#                # Handle message
+#                if msg.startswith("Stranger:"):
+#                    if check_bot_message(msg[10:]):
+#                        print("\033[2mSession 2: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(msg[10:]))
+#                        messages2 = []
+#                        disconnect(browser2)
+#                        connect(browser2)
+#                        stranger_2_msg_time = None
+#                    else:
+#                        messages2.append(msg)
+#                        print("\033[32mStranger 2\033[0m: {}".format(msg[10:]))
+#                        send_message(browser1, msg[10:])
+#                        stranger_2_msg_time = time.time()
+#                elif msg == "Stranger has disconnected.":
+#                    print("\033[2mStranger 2 has disconnected, finding a new partner...\033[0m")
+#                    messages2 = []
+#                    connect(browser2)
+#                    stranger_2_msg_time = None
+#                elif msg == "You have disconnected.":
+#                    print("\033[2mSession 2 manually disconnected. Finding a new partner...\033[0m")
+#                    messages2 = []
+#                    connect(browser2)
+#                    stranger_2_msg_time = None
+#                elif msg.startswith("You're now chatting with a random stranger. Say hi!"):
+#                    print("\033[2mStranger 2 connected.\033[0m")
+#                    messages2.append(msg)
+#                    stranger_2_msg_time = None
+#
+#        time.sleep(0.5)
+#
+#        # Check for timeouts
+#        if stranger_1_msg_time is not None and time.time() - stranger_1_msg_time > timeout:
+#            print("\033[2mSession 1 timed out, connecting to someone else.\033[0m")
+#            messages1 = []
+#            disconnect(browser1)
+#            connect(browser1)
+#            stranger_1_msg_time = None
+#        if stranger_2_msg_time is not None and time.time() - stranger_2_msg_time > timeout:
+#            print("\033[2mSession 2 timed out, connecting to someone else..\033[0m")
+#            messages2 = []
+#            disconnect(browser2)
+#            connect(browser2)
+#            stranger_2_msg_time = None
 
     disconnect(browser1)
     disconnect(browser2)
