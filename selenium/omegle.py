@@ -45,7 +45,10 @@ bot_messages = ["hi! i'm jennifer", "hiiiiiiiii girl", "hello, im lucy",
     "brunette girl here wanna chat?", "hit me up on", "woman 22", ".pro/",
     "im brooke,", "chick here..", "20 female", "18 female", ".site/",
     "heya! i'm jennifer", "heya! my name is", "damn a-girl0)", "got a -(kik)-"
-    "18 f wanna talk??", "check this site adult-omegle.com"]
+    "18 f wanna talk??", "check this site adult-omegle.com",
+    "watch-me", "hey wassup yall", "u should kik me at",
+    "why don't you open kik messenger", "Enter the web and",
+    "I'm doing a sexcam show"]
 
 def check_bot_message(message):
     # Check if message is something a bot would say
