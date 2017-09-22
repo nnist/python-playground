@@ -69,11 +69,13 @@ def handle_log_items(browser, other_browser, session_num, prev_log_items):
             if text == "You have disconnected.": # Manually disconnected
                 print("\033[2mSession {} manually disconnected. Finding a new partner...\033[0m".format(session_num))
                 prev_log_items = []
+                time.sleep(1)
                 connect(browser)
                 break
             elif text == "Stranger has disconnected.": # Stranger disconnected
                 print("\033[2mStranger {} has disconnected, finding a new partner...\033[0m".format(session_num))
                 prev_log_items = []
+                time.sleep(1)
                 connect(browser)
                 break
             elif text == "You're now chatting with a random stranger. Say hi!":
@@ -84,7 +86,9 @@ def handle_log_items(browser, other_browser, session_num, prev_log_items):
                 if check_bot_message(message):
                     print("\033[2mSession {}: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(session_num, message))
                     prev_log_items = []
+                    time.sleep(1)
                     disconnect(browser)
+                    time.sleep(1)
                     connect(browser)
                     break
                 else:
