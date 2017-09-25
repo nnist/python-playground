@@ -97,6 +97,7 @@ def handle_log_items(browser, other_browser, session_num, prev_log_items):
                 else:
                     print("\033[31mStranger {}\033[0m: {}".format(session_num, message))
                     # TODO Update timeout
+                    # TODO Filter out bad words
                     send_message(other_browser, message)
 
     return log_items
