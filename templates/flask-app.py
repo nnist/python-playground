@@ -4,6 +4,8 @@ import time
 from flask import Flask 
 app = Flask(__name__) 
 
+# TODO Use templates to show a page
+
 @app.route("/") 
 def hello():
     app.logger.info('verbose')
@@ -15,4 +17,5 @@ def hello():
     return "<b>{}</b>".format(text)
 
 if __name__ == "__main__":
+    app.debug = True
     app.run()
