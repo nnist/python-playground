@@ -45,7 +45,10 @@ bot_messages = ["hi! i'm jennifer", "hiiiiiiiii girl", "hello, im lucy",
     "brunette girl here wanna chat?", "hit me up on", "woman 22", ".pro/",
     "im brooke,", "chick here..", "20 female", "18 female", ".site/",
     "heya! i'm jennifer", "heya! my name is", "damn a-girl0)", "got a -(kik)-"
-    "18 f wanna talk??", "check this site adult-omegle.com"]
+    "18 f wanna talk??", "check this site adult-omegle.com",
+    "watch-me", "hey wassup yall", "u should kik me at",
+    "why don't you open kik messenger", "Enter the web and",
+    "I'm doing a sexcam show"]
 
 def check_bot_message(message):
     # Check if message is something a bot would say
@@ -69,11 +72,13 @@ def handle_log_items(browser, other_browser, session_num, prev_log_items):
             if text == "You have disconnected.": # Manually disconnected
                 print("\033[2mSession {} manually disconnected. Finding a new partner...\033[0m".format(session_num))
                 prev_log_items = []
+                time.sleep(1)
                 connect(browser)
                 break
             elif text == "Stranger has disconnected.": # Stranger disconnected
                 print("\033[2mStranger {} has disconnected, finding a new partner...\033[0m".format(session_num))
                 prev_log_items = []
+                time.sleep(1)
                 connect(browser)
                 break
             elif text == "You're now chatting with a random stranger. Say hi!":
@@ -84,12 +89,15 @@ def handle_log_items(browser, other_browser, session_num, prev_log_items):
                 if check_bot_message(message):
                     print("\033[2mSession {}: Bot detected. ({}) Disconnected, finding a new partner...\033[0m".format(session_num, message))
                     prev_log_items = []
+                    time.sleep(1)
                     disconnect(browser)
+                    time.sleep(1)
                     connect(browser)
                     break
                 else:
                     print("\033[31mStranger {}\033[0m: {}".format(session_num, message))
                     # TODO Update timeout
+                    # TODO Filter out bad words
                     send_message(other_browser, message)
 
     return log_items
