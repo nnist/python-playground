@@ -66,11 +66,12 @@ res.nsummary( lfilter=lambda (s,r): (r.haslayer(TCP) and (r.getlayer(TCP).flags 
 
 # IKE Scanning
 # try to identify VPN concentrators by sending ISAKMP Security Association proposals and receiving the answers
->>> res,unans = sr( IP(dst="192.168.1.*")/UDP()
+res,unans = sr( IP(dst="192.168.1.*")/UDP()
                 /ISAKMP(init_cookie=RandString(8), exch_type="identity prot.")
                 /ISAKMP_payload_SA(prop=ISAKMP_payload_Proposal())
               )
->>> res.nsummary(prn=lambda (s,r): r.src, lfilter=lambda (s,r): r.haslayer(ISAKMP) )
+res.nsummary(prn=lambda (s,r): r.src, lfilter=lambda (s,r): r.haslayer(ISAKMP) )
+
 # Scan ports 440 through 443
 sr(IP(dst="192.168.1.1")/TCP(sport=666,dport=(440,443),flags="S"))
 
