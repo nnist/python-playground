@@ -1,6 +1,9 @@
 #!/usr/bin/env python3
 
 # TODO Do not throw error when Ctrl-C is pressed
+# TODO Make output prettier
+# TODO Seperate outgoing and incoming
+# TODO Output whois or website address
 
 import pyshark
 import time
