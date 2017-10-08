@@ -11,11 +11,12 @@ import curses
 connections = []
 
 def find_connection(src_ip, dst_ip):
-    for connection in connections:
-        connection_src_ip = connection[0]
-        connection_dst_ip = connection[1]
+    # Find connection in a list of connections, return index or None
+    for i in range(len(connections)):
+        connection_src_ip = connections[i][0]
+        connection_dst_ip = connections[i][1]
         if connection_src_ip == src_ip and connection_dst_ip == dst_ip:
-            return connection
+            return i
     return None
 
 def main(argv):
@@ -70,15 +71,14 @@ def main(argv):
         if 'OPENVPN' in packet:
             packet_type = 'OPENVPN'
        
-        # Find connection in list
-        connection = find_connection(src_ip, dst_ip) 
-        if connection is None:
+        # Find connection in list. Add if not found. Increment if found.
+        connection_index = find_connection(src_ip, dst_ip) 
+        if connection_index is None:
             connections.append((src_ip, dst_ip, 0))
         else:
             # TODO increment by one
-            connection = (connection[0], connection[1], connection[2] + 1)
-            print(connection)
-            #connections[i] = connection
+            connection = (connections[i][0], connections[i][1], connections[i][2] + 1)
+            connections[i] = connection
 
         # TODO Hide cursor
         stdscr.addstr(0, 0, "{} packets captured".format(str(packet_count)), curses.A_BOLD) 
