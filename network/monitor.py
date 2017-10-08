@@ -25,6 +25,7 @@ def main(argv):
     stdscr.nodelay(True)
     curses.noecho()
     curses.cbreak()
+    curses.curs_set(0)
     #begin_x = 20
     #begin_y = 7
     #height = 5
@@ -79,7 +80,6 @@ def main(argv):
             connection = (connections[i][0], connections[i][1], connections[i][2] + 1)
             connections[i] = connection
 
-        # TODO Hide cursor
         stdscr.addstr(0, 0, "{} packets captured".format(str(packet_count)), curses.A_BOLD) 
         
         for i in range(len(connections)):
