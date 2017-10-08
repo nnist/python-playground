@@ -6,19 +6,46 @@ import pyshark
 import time
 import sys
 import os
+import curses
+
+connections = []
+
+def find_connection(src_ip, dst_ip):
+    for connection in connections:
+        connection_src_ip = connection[0]
+        connection_dst_ip = connection[1]
+        if connection_src_ip == src_ip and connection_dst_ip == dst_ip:
+            return connection
+    return None
 
 def main(argv):
-    print('Starting capture.')
+    stdscr = curses.initscr()
+    stdscr.timeout(1)
+    stdscr.nodelay(True)
+    curses.noecho()
+    curses.cbreak()
+    #begin_x = 20
+    #begin_y = 7
+    #height = 5
+    #width = 40
+    #win = curses.newwin(height, width, begin_y, begin_x)
+    stdscr.refresh()
     #capture = pyshark.LiveCapture(interface='enp2s0', bpf_filter='tcp port 80')
     capture = pyshark.LiveCapture(interface='enp2s0')
 
     packet_count = 0
-    sources = []
 
-    # Capture packets
-    for packet in capture.sniff_continuously(packet_count=1000):
+    # Capture packets until q is pressed
+    for packet in capture.sniff_continuously():
+        c = stdscr.getch()
+        if c == ord('q'):
+            curses.nocbreak()
+            curses.echo()
+            curses.endwin()
+            sys.exit(0)
+            #break
+        
         #print('Just arrived:', packet)
-
         src_ip = '?'
         dst_ip = '?'
         packet_type = '?'
@@ -33,10 +60,7 @@ def main(argv):
             packet_type = 'IP'
             src_ip = packet.ip.src
             dst_ip = packet.ip.dst
-            
             #print(packet.ip.field_names)
-            if packet.ip.src not in sources:
-                sources.append(packet.ip.src)
 
         if 'UDP' in packet:
             packet_type = 'UDP'
@@ -45,23 +69,46 @@ def main(argv):
 
         if 'OPENVPN' in packet:
             packet_type = 'OPENVPN'
-        
-        print('{num} {time} {src} -> {dst} {pkt_type}'.format(num=packet_count,
-            time=time.clock(), src=src_ip, dst=dst_ip,
-            pkt_type=packet_type))
+       
+        # Find connection in list
+        connection = find_connection(src_ip, dst_ip) 
+        if connection is None:
+            connections.append((src_ip, dst_ip, 0))
+        else:
+            # TODO increment by one
+            connection = (connection[0], connection[1], connection[2] + 1)
+            print(connection)
+            #connections[i] = connection
 
-    print('-------------------------------------')
-    count = str(packet_count)
-    cap_time = str(time.clock())
-    print('Captured {} packets in {} minutes.'.format(count, cap_time))
-    print(sources)
+        # TODO Hide cursor
+        stdscr.addstr(0, 0, "{} packets captured".format(str(packet_count)), curses.A_BOLD) 
+        
+        for i in range(len(connections)):
+            connection = connections[i]
+            src = connection[0]
+            dst = connection[1]
+            cnt = connection[2]
+            try:
+                stdscr.addstr(i+1, 0, "[{}] {} -> {}".format(cnt, src, dst))
+            except:
+                #print('uh oh')
+                pass
+
+        stdscr.refresh()
+    
+    curses.nocbreak()
+    curses.echo()
+    curses.endwin()
+    sys.exit(0)
 
 if __name__ == "__main__":
     try:
-        main(sys.argv[1:])
+        curses.wrapper(main)
     except KeyboardInterrupt:
-        print('Interrupted by user.')
         try:
+            curses.nocbreak()
+            curses.echo()
+            curses.endwin()
             sys.exit(0)
         except SystemExit:
             os._exit(0)
