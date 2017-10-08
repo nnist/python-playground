@@ -75,9 +75,10 @@ def main(argv):
         # Find connection in list. Add if not found. Increment if found.
         connection_index = find_connection(src_ip, dst_ip) 
         if connection_index is None:
-            connections.append((src_ip, dst_ip, 0))
+            connections.append((src_ip, dst_ip, 0, packet_type))
         else:
-            connection = (connections[i][0], connections[i][1], connections[i][2] + 1)
+            connection = (connections[i][0], connections[i][1],
+                    connections[i][2] + 1, connections[i][3])
             connections[i] = connection
 
         stdscr.addstr(0, 0, "{} packets captured".format(str(packet_count)), curses.A_BOLD) 
@@ -88,8 +89,9 @@ def main(argv):
             src = connection[0]
             dst = connection[1]
             cnt = connection[2]
+            typ = connection[3]
             try:
-                stdscr.addstr(i+1, 0, "[{}] {} -> {}".format(cnt, src, dst))
+                stdscr.addstr(i+1, 0, "[{}] {} {} -> {}".format(cnt, typ, src, dst))
             except:
                 #print('uh oh')
                 pass
