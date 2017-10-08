@@ -82,6 +82,7 @@ def main(argv):
 
         stdscr.addstr(0, 0, "{} packets captured".format(str(packet_count)), curses.A_BOLD) 
         
+        # Get connections and show them on screen
         for i in range(len(connections)):
             connection = connections[i]
             src = connection[0]
