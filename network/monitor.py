@@ -56,24 +56,24 @@ def main(argv):
         packet_type = '?'
 
         if 'ARP' in packet:
-            packet_type = 'ARP'
+            packet_type += 'ARP'
             src_ip = packet.arp.src_proto_ipv4
             dst_ip = packet.arp.dst_proto_ipv4
 
         if 'IP' in packet:
             packet_count += 1
-            packet_type = 'IP'
+            packet_type += 'IP'
             src_ip = packet.ip.src
             dst_ip = packet.ip.dst
             #print(packet.ip.field_names)
 
         if 'UDP' in packet:
-            packet_type = 'UDP'
+            packet_type += 'UDP'
             src_port = packet.udp.srcport
             dst_port = packet.udp.dstport
 
         if 'OPENVPN' in packet:
-            packet_type = 'OPENVPN'
+            packet_type += 'OPENVPN'
        
         # Find connection in list. Add if not found. Increment if found.
         connection_index = find_connection(src_ip, dst_ip) 
