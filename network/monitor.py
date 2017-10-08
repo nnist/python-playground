@@ -76,7 +76,6 @@ def main(argv):
         if connection_index is None:
             connections.append((src_ip, dst_ip, 0))
         else:
-            # TODO increment by one
             connection = (connections[i][0], connections[i][1], connections[i][2] + 1)
             connections[i] = connection
 
