@@ -1,5 +1,6 @@
 import sys
 import argparse
+import random
 
 def main(argv):
     parser = argparse.ArgumentParser(
@@ -27,6 +28,11 @@ def main(argv):
     parser.add_argument(
     "-a", "--adjecent", help="Allow adjecent chars", action="store_true"
     )
+    # TODO Add arg for number of words to return
+    parser.add_argument(
+    "-n", "--number", help="Number of words to return",
+    default=0, type=int
+    )
     args = parser.parse_args()
     length_min = args.min
     length_max = args.max
@@ -35,7 +41,7 @@ def main(argv):
     dict_file = args.file
     allowed_chars = args.chars
 
-    domains = []
+    words = []
     with open(dict_file) as f:
         for line in f:
             word = line[0:-1].lower()
@@ -54,7 +60,15 @@ def main(argv):
                     prev_char = char
                 
                 if fail is False:
-                    print(word)
+                    words.append(word)
+
+    result = ""
+    if args.number != 0:
+        for i in range(args.number):
+            result += " " + random.choice(words)
+    else:
+        result = " ".join(words)
+    print(result)
 
 if __name__ == "__main__":
     try:
