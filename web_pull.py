@@ -8,7 +8,8 @@ valid = False
 
 while valid == False:
     # url = input('> ')
-    url = "http://www.ictlab.nl"
+    url = "https://wtfismyip.com/"
+    #url = "http://www.ictlab.nl"
     try:
         page = urllib.request.urlopen(url)
         break
