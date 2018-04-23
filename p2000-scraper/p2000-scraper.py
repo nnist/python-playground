@@ -48,30 +48,10 @@ def insert_into_database(date_time, calltype, region, priority, postcode, detail
         return True
     return False
 
-def get_proxy():
-    conn = sqlite3.connect('data/proxies.db')
-    cur = conn.cursor()
-    result = cur.execute("""SELECT ip, port, proxy_type, status, last_seen
-                                FROM proxies
-                                WHERE last_seen IS NOT NULL AND status IS 200 AND proxy_type IS 'http'
-                                ORDER BY RANDOM()
-                                LIMIT 1
-                            """)
-    results = result.fetchall()
-    cur.close()
-    proxy = str(results[0][0]) + ":" + str(results[0][1])
-    return proxy
-
-def get_page_using_proxy(url):
+def get_page(url):
     status = None
     html = None
     while status is not 200:
-        proxy = get_proxy()
-        proxy_support = urllib.request.ProxyHandler({'http' : 'http://' + proxy,
-                                                     'https': 'https://' + proxy})
-        opener = urllib.request.build_opener(proxy_support)
-        urllib.request.install_opener(opener)
-
         try:
             req = urllib.request.Request(url)#, headers=headers)
             response = urllib.request.urlopen(req, timeout=2)
@@ -99,7 +79,7 @@ def get_page_using_proxy(url):
 def scrape_page(url):
     status = None
     new_messages = 0
-    html, status = get_page_using_proxy(url)
+    html, status = get_page(url)
     table = None
 
     if status is 200:
