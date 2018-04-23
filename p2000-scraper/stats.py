@@ -1,6 +1,7 @@
 import sqlite3
 from tabulate import tabulate
 from datetime import datetime, timedelta
+import os, sys
 
 def query_database(query):
     conn = sqlite3.connect('data/p2000.db')
@@ -33,39 +34,50 @@ def pretty_print(rows):
 # results = query_database("""SELECT * FROM messages WHERE capcodes NOT NULL"""))
 # results = query_database("""SELECT * FROM messages WHERE type='Brandweer'""")
 
-# Get most recent message
-results = query_database("""SELECT MAX(date_time), type, region, priority, postcode, details
-                            FROM messages
-                        """)
-print('\nMost recent message')
-pretty_print(results)
+def main(argv):
+    # Get most recent message
+    results = query_database("""SELECT MAX(date_time), type, region, priority, postcode, details
+                                FROM messages
+                            """)
+    print('\nMost recent message')
+    pretty_print(results)
+    
+    # Get first message
+    results = query_database("""SELECT MIN(date_time), type, region, priority, postcode, details
+                                FROM messages
+                            """)
+    print('\nFirst message')
+    pretty_print(results)
+    
+    # Count all call types
+    results = query_database("""SELECT type, COUNT(*)
+                                FROM messages
+                                GROUP BY type
+                            """)
+    print('\nNumber of calls per type')
+    pretty_print(results)
+    
+    # Return number of messages per region
+    results = query_database("""SELECT region, COUNT(*) AS cnt
+                                FROM messages
+                                GROUP BY region
+                                ORDER BY cnt DESC
+                            """)
+    print('\nNumber of messages per region')
+    print(tabulate(results))
+    
+    # Get results of last half hour
+    dt = datetime.today() - timedelta(minutes=30)
+    results = query_database("SELECT date_time, type, region, priority, postcode, details FROM messages WHERE date_time > '" + str(dt) + "' ORDER BY date_time ASC")
+    print('\nAll messages of last half hour')
+    pretty_print(results)
 
-# Get first message
-results = query_database("""SELECT MIN(date_time), type, region, priority, postcode, details
-                            FROM messages
-                        """)
-print('\nFirst message')
-pretty_print(results)
-
-# Count all call types
-results = query_database("""SELECT type, COUNT(*)
-                            FROM messages
-                            GROUP BY type
-                        """)
-print('\nNumber of calls per type')
-pretty_print(results)
-
-# Return number of messages per region
-results = query_database("""SELECT region, COUNT(*) AS cnt
-                            FROM messages
-                            GROUP BY region
-                            ORDER BY cnt DESC
-                        """)
-print('\nNumber of messages per region')
-print(tabulate(results))
-
-# Get results of last half hour
-dt = datetime.today() - timedelta(minutes=30)
-results = query_database("SELECT date_time, type, region, priority, postcode, details FROM messages WHERE date_time > '" + str(dt) + "' ORDER BY date_time ASC")
-print('\nAll messages of last half hour')
-pretty_print(results)
+if __name__ == "__main__":
+    try:
+        main(sys.argv[1:])
+    except KeyboardInterrupt:
+        print('Interrupted by user.')
+        try:
+            sys.exit(0)
+        except SystemExit:
+            os._exit(0)
