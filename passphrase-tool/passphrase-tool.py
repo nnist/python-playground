@@ -38,13 +38,13 @@ class PassphraseGenerator:
                     if fail is False:
                         words.append(word)
 
-        result = ""
+        selected_words = []
         if self.number != 0:
             for i in range(self.number):
-                result += " " + random.choice(words)
+                selected_words.append(random.choice(words))
         else:
-            result = " ".join(words)
-        return result
+            selected_words = words
+        return selected_words
 
 def main(argv):
     parser = argparse.ArgumentParser(
