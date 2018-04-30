@@ -1,6 +1,50 @@
+# TODO Serve to webpage
+# TODO Checkboxes for options
+# TODO Button for generating passphrases
+# TODO Passphrase output/display
+
 import sys
 import argparse
 import random
+
+class PassphraseGenerator:
+    def __init__(self, length_min=1, length_max=999, double=False, adjecent=False, allowed_chars="qwertiopasdfgjkl", dict_file="nederlands3.txt", number=3):
+        self.dict_file = dict_file
+        self.length_min = length_min
+        self.length_max = length_max
+        self.allowed_chars = allowed_chars
+        self.double = double
+        self.number = number
+
+    def generate(self):
+        words = []
+        with open(self.dict_file) as f:
+            for line in f:
+                word = line[0:-1].lower()
+                prev_char = ""
+                fail = False
+
+                if len(word) >= self.length_min and len(word) <= self.length_max:
+                    #TODO disallow word if char is adjecent to prev_char
+                    for char in word:
+                        if char not in self.allowed_chars:
+                            fail = True
+                            break
+                        if self.double is False and prev_char == char:
+                            fail = True
+                            break
+                        prev_char = char
+                    
+                    if fail is False:
+                        words.append(word)
+
+        result = ""
+        if self.number != 0:
+            for i in range(self.number):
+                result += " " + random.choice(words)
+        else:
+            result = " ".join(words)
+        return result
 
 def main(argv):
     parser = argparse.ArgumentParser(
@@ -40,34 +84,10 @@ def main(argv):
     adjecent = bool(args.adjecent)
     dict_file = args.file
     allowed_chars = args.chars
+    number = args.number
 
-    words = []
-    with open(dict_file) as f:
-        for line in f:
-            word = line[0:-1].lower()
-            prev_char = ""
-            fail = False
-
-            if len(word) >= length_min and len(word) <= length_max:
-                #TODO disallow word if char is adjecent to prev_char
-                for char in word:
-                    if char not in allowed_chars:
-                        fail = True
-                        break
-                    if double is False and prev_char == char:
-                        fail = True
-                        break
-                    prev_char = char
-                
-                if fail is False:
-                    words.append(word)
-
-    result = ""
-    if args.number != 0:
-        for i in range(args.number):
-            result += " " + random.choice(words)
-    else:
-        result = " ".join(words)
+    generator = PassphraseGenerator(length_min, length_max, double, adjecent, allowed_chars, dict_file, number)
+    result = generator.generate()
     print(result)
 
 if __name__ == "__main__":
