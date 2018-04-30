@@ -17,6 +17,7 @@ from multiprocessing.dummy import Pool
 import os
 
 def init_database():
+    # Initialize the database
     conn = sqlite3.connect('data/p2000.db')
     cur = conn.cursor()
     cur.execute("""CREATE TABLE IF NOT EXISTS messages (
@@ -33,6 +34,7 @@ def init_database():
     cur.close()
 
 def insert_into_database(date_time, calltype, region, priority, postcode, details, capcodes):
+    # Insert P2000 item into database
     conn = sqlite3.connect('data/p2000.db')
     cur = conn.cursor()
 
@@ -74,6 +76,7 @@ class Scraper():
         print('Done! Added', new_messages, 'new messages.')
     
     def scrape_page(self, url):
+        # Scrape page for P2000 items and return them
         status = None
         new_messages = 0
         html, status = self.get_page(url)
@@ -142,6 +145,7 @@ class Scraper():
         return new_messages
 
     def get_page(self, url):
+        # Get page and return it and the status code
         status = None
         html = None
         while status is not 200:
