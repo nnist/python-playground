@@ -2,6 +2,9 @@
 # TODO Checkboxes for options
 # TODO Button for generating passphrases
 # TODO Passphrase output/display
+# TODO Textbox for allowed characters
+# TODO Passphrase information (tips, tricks, sources)
+# TODO Dockerize
 
 import sys
 import argparse
