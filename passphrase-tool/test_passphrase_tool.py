@@ -1,4 +1,5 @@
 from passphrase_tool import *
+import urllib.request
 
 def test_number_of_words():
     generator = PassphraseGenerator(length_min=9, length_max=9, number=12)
@@ -16,3 +17,7 @@ def test_maximum_length():
     results = generator.generate()
     for result in results:
         assert len(result) <= 12
+
+def test_webserver_running():
+    contents = urllib.request.urlopen("http://127.0.0.1:5000").read()
+    assert contents is not None
