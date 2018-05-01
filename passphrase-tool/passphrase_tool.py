@@ -17,6 +17,8 @@ class PassphraseGenerator:
         self.number = number
 
     def generate(self):
+        # Open the dictionary file and return a list of words that
+        # meet the requirements.
         words = []
         with open(self.dict_file) as f:
             for line in f:
