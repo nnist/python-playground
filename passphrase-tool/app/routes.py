@@ -1,5 +1,6 @@
 # TODO Passphrase output/display
 # TODO Dockerize
+# TODO Add short useful info about passphrases, with sources
 
 from flask import render_template
 from app import app
