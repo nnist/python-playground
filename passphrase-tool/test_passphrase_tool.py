@@ -1,5 +1,13 @@
 from passphrase_tool import *
 import urllib.request
+from app import app
+import pytest
+
+@pytest.fixture
+def client():
+    app.config['TESTING'] = True
+    client = app.test_client()
+    return client
 
 def test_number_of_words():
     generator = PassphraseGenerator(length_min=9, length_max=9, number=12)
@@ -18,6 +26,6 @@ def test_maximum_length():
     for result in results:
         assert len(result) <= 12
 
-def test_webserver_running():
-    contents = urllib.request.urlopen("http://127.0.0.1:5000").read()
-    assert contents is not None
+def test_webserver_running(client):
+    rv = client.get('/')
+    assert rv.data != b'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.</p>\n'
