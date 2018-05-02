@@ -11,7 +11,26 @@
                 <li>Intentionally mis-spell words</li>
                 <li>Turn letters around, i.e. deep-fried = freep-died</li>
                 <li>More characters = more secure</li>
+            </ul>
             </p>
+            <form action="" method="post">
+                {{ options_form.hidden_tag() }}
+                <p>
+                    {{ options_form.min_length.label }}
+                    {{ options_form.min_length(size=2) }}<br>
+                    {{ options_form.max_length.label }}
+                    {{ options_form.max_length(size=2) }}<br>
+                    {{ options_form.allowed_chars.label }}
+                    {{ options_form.allowed_chars(size=32) }}<br>
+                    {{ options_form.double.label }}
+                    {{ options_form.double() }}<br>
+                    {{ options_form.adjecent.label }}
+                    {{ options_form.adjecent() }}
+                </p>
+                <p>
+                    {{ options_form.refresh() }}
+                </p>
+            </form>
         </div>
         <div>
         <p>{{ words.words }}</p>
