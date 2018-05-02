@@ -47,8 +47,8 @@ def index():
     else:
         allowed_chars = allowed_chars_data
     
-    double_data = options_form.double.data
-    adjecent_data = options_form.adjecent.data
+    double = options_form.double.data
+    adjecent = options_form.adjecent.data
     
     if not options_form.validate_on_submit():
         print('error: form not valid')
