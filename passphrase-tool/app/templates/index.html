@@ -5,44 +5,67 @@
     <body>
         <h1>Passphrase tool</h1>
         <div>
+            <div style="width: 50%; float: left;">
+                <form action="" method="post">
+                    {{ options_form.hidden_tag() }}
+                    <p>
+                        {{ options_form.min_length.label }}
+                        {{ options_form.min_length(size=2) }}<br>
+                        {{ options_form.max_length.label }}
+                        {{ options_form.max_length(size=2) }}<br>
+                        {{ options_form.allowed_chars.label }}
+                        {{ options_form.allowed_chars(size=32) }}<br>
+                        {{ options_form.double.label }}
+                        {{ options_form.double() }}<br>
+                        {{ options_form.adjecent.label }}
+                        {{ options_form.adjecent() }}
+                    </p>
+                    <p>
+                        {{ options_form.refresh() }}
+                    </p>
+                </form>
+            </div>
+            <div style="width: 50%; float: right;">
+            <p>{{ words.words }}</p>
+            </div>
+        </div>
+        <div style="width: 100%; float: left;">
+            <h2>What is this?</h2>
             <p>
-            Tips:
+                This is a tool which finds easily typeable words for use in passphrases.
+
+                <!-- and before you go muh dictionary etc
+                just change -one- random character to something different..
+                and the entire phrase is no longer crackable by dict attack.
+                of course stuff like social engineering, finding patterns etc
+                would still compromise your chosen passphrases. -->
+            </p>
+            <p>
+            <h2>Why should I use a passphrase?</h2>
             <ul>
-                <li>Intentionally mis-spell words</li>
+                <li>Generally stronger than a regular password</li>
+                <li>Easy to remember multiple passphrases</li>
+                <li>Easier to type</li>
+                <li>Unlikely to be in existing password databases</li>
+            </ul>
+            </p>
+            <p>
+            <h2>Passphrase tips</h2>
+            <ul>
+                <li>Intentionally mis-spell words to increase uniqueness</li>
                 <li>Turn letters around, i.e. deep-fried = freep-died</li>
                 <li>More characters = more secure</li>
                 <li>Make up your own words</li>
             </ul>
-            Disclaimer:
+            <h2>Disclaimer</h2>
             <ul>
                 <li>Does not protect against acoustic snooping[https://people.eecs.berkeley.edu/~tygar/papers/Keyboard_Acoustic_Emanations_Revisited/preprint.pdf], Van Eck phreaking[https://en.wikipedia.org/wiki/Van_Eck_phreaking], keyloggers, hackers, spies, etc.</li>
-                <li>I do not take responsibility for anything blah blah</ul>
+                <li>The passwords generated here only serve as an example. Don't put your trust in them. Don't use them for anything important. Don't just use them without thinking of the possible security risks. Someone might be spyin', or I might just be storing all generated passwords, etc.</li>
+                <li>I do not take responsibility for anything blah blah</li>
+            </ul>
             </p>
-            <form action="" method="post">
-                {{ options_form.hidden_tag() }}
-                <p>
-                    {{ options_form.min_length.label }}
-                    {{ options_form.min_length(size=2) }}<br>
-                    {{ options_form.max_length.label }}
-                    {{ options_form.max_length(size=2) }}<br>
-                    {{ options_form.allowed_chars.label }}
-                    {{ options_form.allowed_chars(size=32) }}<br>
-                    {{ options_form.double.label }}
-                    {{ options_form.double() }}<br>
-                    {{ options_form.adjecent.label }}
-                    {{ options_form.adjecent() }}
-                </p>
-                <p>
-                    {{ options_form.refresh() }}
-                </p>
-            </form>
-        </div>
-        <div>
-        <p>{{ words.words }}</p>
-        </div>
-        <div>
             <p>
-                Links:
+                <h2>Links</h2>
                 <ul>
                     <li>https://en.wikipedia.org/wiki/Password_strength</li>
                     <li>http://world.std.com/~reinhold/diceware.html</li>
