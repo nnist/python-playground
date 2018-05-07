@@ -20,8 +20,8 @@ class OptionsForm(FlaskForm):
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
-    length_min = 12
-    length_max = 12
+    length_min = 6
+    length_max = 8
     double = False
     adjecent = False
     dict_file = "nederlands3.txt"
