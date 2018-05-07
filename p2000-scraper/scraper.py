@@ -61,7 +61,8 @@ class Scraper():
         # Build a list of urls to send to threads
         urls = []
         for i in range(number_of_pages):
-            urls.append("http://www.p2000-online.net/p2000.php?Pagina=" + str(i+offset) + "&AutoRefresh=uit")
+            urls.append("http://www.p2000-online.net/p2000.php?Pagina=" +
+                        str(i+offset) + "&AutoRefresh=uit")
 
         # Scrape pages using threads
         pool = Pool(threads)
