@@ -39,8 +39,9 @@ def insert_into_database(date_time, calltype, region, priority, postcode, detail
     cur = conn.cursor()
 
     # Check if message already exists
-    result = cur.execute("""SELECT * FROM messages WHERE date_time=? AND type=? AND region=? AND details=?""",
-    (date_time, calltype, region, details))
+    result = cur.execute("""SELECT * FROM messages WHERE date_time=? \
+                            AND type=? AND region=? AND details=?""",
+                         (date_time, calltype, region, details))
     results = result.fetchall()
     if(not results):
         cur.execute("""INSERT INTO messages VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)""",
