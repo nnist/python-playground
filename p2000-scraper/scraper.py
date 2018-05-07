@@ -57,7 +57,7 @@ class Scraper():
     def __init__(self, number_of_pages=1, offset=0, threads=1):
         new_messages = 0
         print('Scraping', number_of_pages, 'pages...')
-        
+
         # Build a list of urls to send to threads
         urls = []
         for i in range(number_of_pages):
@@ -77,18 +77,18 @@ class Scraper():
         pool.join()
 
         print('Done! Added', new_messages, 'new messages.')
-    
+
     def scrape_page(self, url):
         # Scrape page for P2000 items and return them
         status = None
         new_messages = 0
         html, status = self.get_page(url)
         table = None
-    
+
         if status is 200:
             soup = BeautifulSoup(html, 'html.parser')
             table = soup.find("table", { "style" : "align:center" })
-    
+
         if table is None:
             status = 400
         else:
@@ -100,12 +100,12 @@ class Scraper():
             postcode = None
             details = None
             capcodes = []
-    
+
             for row in table.findAll("tr"):
                 cells = row.findAll("td")
                 if(len(cells) > 1):
                     date = cells[0].find(text=True)
-    
+
                     if(date is not None): # Regular message
                         if(date_time is not None):
                             if insert_into_database(date_time, calltype, region, priority, postcode, details, str(capcodes)):
@@ -118,16 +118,16 @@ class Scraper():
                             postcode = None
                             details = None
                             capcodes = []
-    
+
                         # Convert date and time to YYYY-MM-DD HH:MM:SS
                         time = cells[1].find(text=True)
                         date = '20' + date[6:8] + '-' + date[3:5] + '-' + date[0:2]
                         date_time = date + ' ' + time
-    
+
                         calltype = cells[2].find(text=True)
                         region = cells[3].find(text=True)
                         details = cells[4].find(text=True)
-    
+
                         # Find priority code in details (ex. A1, A 1, P 1)
                         re_results = re.findall(r'(PRIO|Prio|[ABP])\s*(\d)', details)
                         if(len(re_results) > 0):
@@ -197,9 +197,9 @@ def main(argv):
             offset = int(arg)
         elif opt in ("-t", "--threads"):
             threads = int(arg)
-    
+
     init_database()
-    
+
     scraper = Scraper(number_of_pages, offset, threads)
 
 if __name__ == "__main__":
