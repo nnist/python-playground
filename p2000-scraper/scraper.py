@@ -104,11 +104,11 @@ class Scraper():
 
             for row in table.findAll("tr"):
                 cells = row.findAll("td")
-                if(len(cells) > 1):
+                if len(cells) > 1:
                     date = cells[0].find(text=True)
 
-                    if(date is not None): # Regular message
-                        if(date_time is not None):
+                    if date is not None: # Regular message
+                        if date_time is not None:
                             if insert_into_database(date_time, calltype, region, priority, postcode, details, str(capcodes)):
                                 new_messages += 1
                             # Clear all variables
@@ -131,20 +131,20 @@ class Scraper():
 
                         # Find priority code in details (ex. A1, A 1, P 1)
                         re_results = re.findall(r'(PRIO|Prio|[ABP])\s*(\d)', details)
-                        if(len(re_results) > 0):
+                        if len(re_results) > 0:
                             a = re_results[0][0]
                             b = re_results[0][1]
-                            if(a == 'PRIO' or a == 'Prio'):
+                            if a == 'PRIO' or a == 'Prio':
                                 priority = 'P' + b
                             else:
                                 priority = str(a) + str(b)
                         # Find postcode (ex. 2356DF)
                         re_results = re.findall(r'\d{4}[A-Z]{2}', details)
-                        if(re_results != []):
+                        if re_results != []:
                             postcode = str(re_results[0])
                     else: # Capcode or empty
                         capcode_details = cells[4].find(text=True)
-                        if(capcode_details is not None): # Definitely a capcode
+                        if capcode_details is not None: # Definitely a capcode
                             capcodes += [capcode_details]
         return new_messages
 
