@@ -186,7 +186,8 @@ def main(argv):
     threads = 1
 
     try:
-        opts, args = getopt.getopt(argv,"hp:o:t:",["pages=", "offset=", "threads="])
+        opts, args = getopt.getopt(argv, "hp:o:t:", ["pages=", "offset=",
+                                                     "threads="])
     except getopt.GetoptError:
         print('usage: p2000.py -p <pages> -o <offset> -t <threads>')
         sys.exit(2)
