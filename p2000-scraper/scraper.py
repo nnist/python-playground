@@ -109,7 +109,9 @@ class Scraper():
 
                     if date is not None: # Regular message
                         if date_time is not None:
-                            if insert_into_database(date_time, calltype, region, priority, postcode, details, str(capcodes)):
+                            if insert_into_database(date_time, calltype, region,
+                                                    priority, postcode, details,
+                                                    str(capcodes)):
                                 new_messages += 1
                             # Clear all variables
                             date_time = None
