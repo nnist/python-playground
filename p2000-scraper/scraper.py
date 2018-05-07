@@ -44,8 +44,10 @@ def insert_into_database(date_time, calltype, region, priority, postcode, detail
                          (date_time, calltype, region, details))
     results = result.fetchall()
     if not results:
-        cur.execute("""INSERT INTO messages VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)""",
-        (date_time, calltype, region, priority, postcode, details, capcodes))
+        cur.execute("""INSERT INTO messages \
+                       VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)""",
+                    (date_time, calltype, region, priority, postcode,
+                     details, capcodes))
         conn.commit()
         cur.close()
         return True
