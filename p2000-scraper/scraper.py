@@ -88,7 +88,7 @@ class Scraper():
 
         if status is 200:
             soup = BeautifulSoup(html, 'html.parser')
-            table = soup.find("table", { "style" : "align:center" })
+            table = soup.find("table", {"style" : "align:center"})
 
         if table is None:
             status = 400
