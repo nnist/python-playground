@@ -1,3 +1,15 @@
+<style>
+.left, .right {
+    float: left;
+    width: 50%;
+}
+
+@media only screen and (max-width:800px) {
+    .left, .right {
+        width:100%;
+    }
+}
+</style>
 <html>
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -6,7 +18,7 @@
     <body>
         <h1>Passphrase tool</h1>
         <div>
-            <div style="width: 50%; float: left;">
+            <div class="left">
                 <form action="" method="post">
                     {{ options_form.hidden_tag() }}
                     <p>
@@ -26,7 +38,7 @@
                     </p>
                 </form>
             </div>
-            <div style="width: 50%; float: right;">
+            <div class="right">
             <p>{{ words.words }}</p>
             </div>
         </div>
