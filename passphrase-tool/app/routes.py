@@ -7,11 +7,12 @@ from app import app
 from passphrase_tool import *
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField
+from wtforms.fields.html5 import IntegerField
 from wtforms.validators import DataRequired
 
 class OptionsForm(FlaskForm):
-    min_length = StringField('Min length', validators=[DataRequired()])
-    max_length = StringField('Max length', validators=[DataRequired()])
+    min_length = IntegerField('Min length', validators=[DataRequired()])
+    max_length = IntegerField('Max length', validators=[DataRequired()])
     allowed_chars = StringField('Allowed chars', validators=[DataRequired()])
     double = BooleanField('Double')
     adjecent = BooleanField('Adjecent')
