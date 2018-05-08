@@ -25,9 +25,9 @@
                     {{ options_form.hidden_tag() }}
                     <p>
                         {{ options_form.min_length.label }}
-                        {{ options_form.min_length(size=2) }}<br>
+                        {{ options_form.min_length(size=2, min=1) }}<br>
                         {{ options_form.max_length.label }}
-                        {{ options_form.max_length(size=2) }}<br>
+                        {{ options_form.max_length(size=2, min=1) }}<br>
                         {{ options_form.allowed_chars.label }}
                         {{ options_form.allowed_chars(size=24) }}<br>
                         {{ options_form.double.label }}
