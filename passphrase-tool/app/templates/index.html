@@ -29,11 +29,11 @@
                         {{ options_form.max_length.label }}
                         {{ options_form.max_length(size=2, min=1) }}<br>
                         {{ options_form.allowed_chars.label }}
-                        {{ options_form.allowed_chars(size=24) }}<br>
+                        {{ options_form.allowed_chars(size=24, title="Only show words using these characters") }}<br>
                         {{ options_form.double.label }}
-                        {{ options_form.double() }}<br>
+                        {{ options_form.double(title="Show words with double characters") }}<br>
                         {{ options_form.adjecent.label }}
-                        {{ options_form.adjecent() }}
+                        {{ options_form.adjecent(title="Show words with adjecent characters") }}
                     </p>
                     <p>
                         {{ options_form.refresh() }}
