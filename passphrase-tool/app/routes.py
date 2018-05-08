@@ -2,6 +2,7 @@
 # TODO Dockerize
 # TODO Add short useful info about passphrases, with sources
 # TODO Checkboxes for verbs, nouns, etc.
+# TODO Add reset button to form
 
 from flask import render_template
 from app import app
