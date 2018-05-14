@@ -1,6 +1,7 @@
 import sys
 import argparse
 import random
+import os
 
 class PassphraseGenerator:
     """Generate passphrase words."""
