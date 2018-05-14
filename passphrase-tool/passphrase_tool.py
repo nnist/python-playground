@@ -8,7 +8,8 @@ class PassphraseGenerator:
     """Generate passphrase words."""
     def __init__(self, length_min=1, length_max=999, double=False,
                  adjecent=False, allowed_chars="qwertiopasdfgjkl",
-                 dict_file="nederlands3.txt", number=3):
+                 dict_file="nederlands3.txt", number=3, verbs=True,
+                 nouns=True):
         self.dict_file = dict_file
         self.length_min = length_min
         self.length_max = length_max
@@ -16,6 +17,8 @@ class PassphraseGenerator:
         self.double = double
         self.number = number
         self.adjecent = adjecent
+        self.verbs = verbs
+        self.nouns = nouns
 
     def generate(self):
         """Open the dictionary file and return a list of words that
@@ -39,6 +42,14 @@ class PassphraseGenerator:
                             break
                         prev_char = char
 
+                    # TODO finish this
+                    #if word in verb_words and not self.verbs:
+                    #    fail = True
+                    #    break
+                    #
+                    #if word in noun_words and not self.nouns:
+                    #    fail = True
+                    #    break
                     if fail is False:
                         words.append(word)
 
@@ -81,6 +92,12 @@ def main(argv):
         "-n", "--number", help="Number of words to return",
         default=0, type=int
     )
+    parser.add_argument(
+        "--verbs", help="Allow verbs", action="store_true"
+    )
+    parser.add_argument(
+        "--nouns", help="Allow nouns", action="store_true"
+    )
     args = parser.parse_args(argv)
     length_min = args.min
     length_max = args.max
@@ -89,9 +106,12 @@ def main(argv):
     dict_file = args.file
     allowed_chars = args.chars
     number = args.number
+    verbs = bool(args.verbs)
+    nouns = bool(args.nouns)
 
     generator = PassphraseGenerator(length_min, length_max, double, adjecent,
-                                    allowed_chars, dict_file, number)
+                                    allowed_chars, dict_file, number,
+                                    verbs, nouns)
     result = generator.generate()
     print(result)
 
