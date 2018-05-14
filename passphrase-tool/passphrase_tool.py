@@ -34,7 +34,7 @@ class PassphraseGenerator:
                             fail = True
                             break
                         prev_char = char
-                    
+
                     if fail is False:
                         words.append(word)
 
