@@ -34,19 +34,19 @@ def index():
     options_form = OptionsForm()
 
     min_length_data = options_form.min_length.data
-    if min_length_data is '' or min_length_data is None:
+    if min_length_data == '' or min_length_data is None:
         options_form.min_length.data = length_min
     else:
         length_min = int(min_length_data)
 
     max_length_data = options_form.max_length.data
-    if max_length_data is '' or max_length_data is None:
+    if max_length_data == '' or max_length_data is None:
         options_form.max_length.data = length_max
     else:
         length_max = int(max_length_data)
 
     allowed_chars_data = options_form.allowed_chars.data
-    if allowed_chars_data is '' or allowed_chars_data is None:
+    if allowed_chars_data == '' or allowed_chars_data is None:
         options_form.allowed_chars.data = allowed_chars
     else:
         allowed_chars = allowed_chars_data
