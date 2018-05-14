@@ -3,6 +3,7 @@
 # TODO Add short useful info about passphrases, with sources
 # TODO Checkboxes for verbs, nouns, etc.
 # TODO Add reset button to form
+# TODO Present passphrase words in a better way
 
 from flask import render_template
 from app import app
