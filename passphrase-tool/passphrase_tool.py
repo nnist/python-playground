@@ -20,8 +20,8 @@ class PassphraseGenerator:
         """Open the dictionary file and return a list of words that
            meet the requirements."""
         words = []
-        with open(self.dict_file) as f:
-            for line in f:
+        with open(self.dict_file) as dictfile:
+            for line in dictfile:
                 word = line[0:-1].lower()
                 prev_char = ""
                 fail = False
