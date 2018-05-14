@@ -43,7 +43,7 @@ class PassphraseGenerator:
 
         selected_words = []
         if self.number != 0:
-            for i in range(self.number):
+            for _ in range(self.number):
                 selected_words.append(random.choice(words))
         else:
             selected_words = words
