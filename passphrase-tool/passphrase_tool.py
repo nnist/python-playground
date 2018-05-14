@@ -48,31 +48,31 @@ def main(argv):
         description="""Gets quick to type words from a dictionary."""
     )
     parser.add_argument(
-    "--min", help="Minimum length of words",
-    default=1, type=int
+        "--min", help="Minimum length of words",
+        default=1, type=int
     )
     parser.add_argument(
-    "--max", help="Maximum length of words",
-    default=999, type=int
+        "--max", help="Maximum length of words",
+        default=999, type=int
     )
     parser.add_argument(
-    "-f", help="Dictionary file to use",
-    dest="file", default="nederlands3.txt"
+        "-f", help="Dictionary file to use",
+        dest="file", default="nederlands3.txt"
     )
     parser.add_argument(
-    "-c", "--chars", help="Characters to allow",
-    default="qwertiopasdfgjkl"
+        "-c", "--chars", help="Characters to allow",
+        default="qwertiopasdfgjkl"
     )
     parser.add_argument(
-    "-d", "--double", help="Allow double chars", action="store_true"
+        "-d", "--double", help="Allow double chars", action="store_true"
     )
     parser.add_argument(
-    "-a", "--adjecent", help="Allow adjecent chars", action="store_true"
+        "-a", "--adjecent", help="Allow adjecent chars", action="store_true"
     )
     # TODO Add arg for number of words to return
     parser.add_argument(
-    "-n", "--number", help="Number of words to return",
-    default=0, type=int
+        "-n", "--number", help="Number of words to return",
+        default=0, type=int
     )
     args = parser.parse_args()
     length_min = args.min
