@@ -81,7 +81,7 @@ def main(argv):
         "-n", "--number", help="Number of words to return",
         default=0, type=int
     )
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     length_min = args.min
     length_max = args.max
     double = bool(args.double)
