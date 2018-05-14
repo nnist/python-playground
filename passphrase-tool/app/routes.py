@@ -63,7 +63,7 @@ def index():
     generator = PassphraseGenerator(length_min, length_max, double, adjecent,
                                     allowed_chars, dict_file, number)
     results = generator.generate()
-    
+
     # Format and display words
     words = ""
     for word in results:
