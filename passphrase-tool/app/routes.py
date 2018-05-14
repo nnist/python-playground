@@ -6,7 +6,7 @@
 
 from flask import render_template
 from app import app
-from passphrase_tool import *
+from passphrase_tool import PassphraseGenerator
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, BooleanField
 from wtforms.fields.html5 import IntegerField
