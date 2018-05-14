@@ -63,4 +63,5 @@ def index():
     results = generator.generate()
     words = {'words': str(results)}
 
-    return render_template('index.html', title='Passphrase tool', words=words, options_form=options_form)
+    return render_template('index.html', title='Passphrase tool', words=words,
+                           options_form=options_form)
