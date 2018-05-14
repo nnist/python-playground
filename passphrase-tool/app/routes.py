@@ -1,4 +1,3 @@
-# TODO Passphrase output/display
 # TODO Dockerize
 # TODO Add short useful info about passphrases, with sources
 # TODO Checkboxes for verbs, nouns, etc.
