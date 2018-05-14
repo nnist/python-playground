@@ -58,7 +58,8 @@ def index():
         print('error: form not valid')
         # TODO Properly handle this
 
-    generator = PassphraseGenerator(length_min, length_max, double, adjecent, allowed_chars, dict_file, number)
+    generator = PassphraseGenerator(length_min, length_max, double, adjecent,
+                                    allowed_chars, dict_file, number)
     results = generator.generate()
     words = {'words': str(results)}
 
