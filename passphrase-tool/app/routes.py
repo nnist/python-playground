@@ -13,6 +13,7 @@ from wtforms.fields.html5 import IntegerField
 from wtforms.validators import DataRequired
 
 class OptionsForm(FlaskForm):
+    """Create fields for the options form."""
     min_length = IntegerField('Min length', validators=[DataRequired()])
     max_length = IntegerField('Max length', validators=[DataRequired()])
     allowed_chars = StringField('Allowed chars', validators=[DataRequired()])
@@ -23,6 +24,7 @@ class OptionsForm(FlaskForm):
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
 def index():
+    """Show the index page."""
     length_min = 6
     length_max = 8
     double = False
