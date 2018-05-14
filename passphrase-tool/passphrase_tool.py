@@ -1,3 +1,4 @@
+"""Generate words for use in passphrases."""
 import sys
 import argparse
 import random
