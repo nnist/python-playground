@@ -13,6 +13,7 @@ class PassphraseGenerator:
         self.allowed_chars = allowed_chars
         self.double = double
         self.number = number
+        self.adjecent = adjecent
 
     def generate(self):
         """Open the dictionary file and return a list of words that
