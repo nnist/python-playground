@@ -3,6 +3,7 @@ import argparse
 import random
 
 class PassphraseGenerator:
+    """Generate passphrase words."""
     def __init__(self, length_min=1, length_max=999, double=False,
                  adjecent=False, allowed_chars="qwertiopasdfgjkl",
                  dict_file="nederlands3.txt", number=3):
@@ -14,8 +15,8 @@ class PassphraseGenerator:
         self.number = number
 
     def generate(self):
-        # Open the dictionary file and return a list of words that
-        # meet the requirements.
+        """Open the dictionary file and return a list of words that
+           meet the requirements."""
         words = []
         with open(self.dict_file) as f:
             for line in f:
@@ -47,6 +48,7 @@ class PassphraseGenerator:
         return selected_words
 
 def main(argv):
+    """Generate words for use in passphrases and print them to stdout."""
     parser = argparse.ArgumentParser(
         description="""Gets quick to type words from a dictionary."""
     )
