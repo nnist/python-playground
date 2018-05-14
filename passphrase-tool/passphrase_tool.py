@@ -76,7 +76,6 @@ def main(argv):
     parser.add_argument(
         "-a", "--adjecent", help="Allow adjecent chars", action="store_true"
     )
-    # TODO Add arg for number of words to return
     parser.add_argument(
         "-n", "--number", help="Number of words to return",
         default=0, type=int
