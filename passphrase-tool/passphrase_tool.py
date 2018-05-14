@@ -3,7 +3,9 @@ import argparse
 import random
 
 class PassphraseGenerator:
-    def __init__(self, length_min=1, length_max=999, double=False, adjecent=False, allowed_chars="qwertiopasdfgjkl", dict_file="nederlands3.txt", number=3):
+    def __init__(self, length_min=1, length_max=999, double=False,
+                 adjecent=False, allowed_chars="qwertiopasdfgjkl",
+                 dict_file="nederlands3.txt", number=3):
         self.dict_file = dict_file
         self.length_min = length_min
         self.length_max = length_max
@@ -21,7 +23,8 @@ class PassphraseGenerator:
                 prev_char = ""
                 fail = False
 
-                if len(word) >= self.length_min and len(word) <= self.length_max:
+                if len(word) >= self.length_min and \
+                   len(word) <= self.length_max:
                     #TODO disallow word if char is adjecent to prev_char
                     for char in word:
                         if char not in self.allowed_chars:
@@ -83,7 +86,8 @@ def main(argv):
     allowed_chars = args.chars
     number = args.number
 
-    generator = PassphraseGenerator(length_min, length_max, double, adjecent, allowed_chars, dict_file, number)
+    generator = PassphraseGenerator(length_min, length_max, double, adjecent,
+                                    allowed_chars, dict_file, number)
     result = generator.generate()
     print(result)
 
