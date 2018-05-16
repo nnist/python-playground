@@ -64,7 +64,7 @@ class PassphraseGenerator:
             else:
                 selected_words = words
             return selected_words
-        except:
+        except FileNotFoundError:
             return ["Error: Dict file does not exist"]
 
 def main(argv):
