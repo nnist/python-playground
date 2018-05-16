@@ -66,9 +66,9 @@ class Scraper():
 
         # Scrape pages using threads
         pool = Pool(threads)
-        it = pool.imap_unordered(self.scrape_page, urls)
+        iterations = pool.imap_unordered(self.scrape_page, urls)
         pbar = tqdm(total=len(urls))
-        for result in enumerate(it):
+        for result in enumerate(iterations):
             pbar.update()
             new_messages += result[1]
 
