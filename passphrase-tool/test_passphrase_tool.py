@@ -30,6 +30,10 @@ def test_invalid_input():
     generator = PassphraseGenerator(length_min=7, length_max=6, number=500)
     results = generator.generate()
     assert results == ["Error: Invalid input"]
+    generator = PassphraseGenerator(length_min=7, length_max=8, number=500,
+                                    dict_file="potato")
+    results = generator.generate()
+    assert results == ["Error: Dict file does not exist"]
 
 def test_webserver_running(client):
     rv = client.get('/')

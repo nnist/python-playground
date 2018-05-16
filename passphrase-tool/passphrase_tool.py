@@ -24,45 +24,48 @@ class PassphraseGenerator:
         """Open the dictionary file and return a list of words that
            meet the requirements."""
         words = []
-        with open(self.dict_file) as dictfile:
-            for line in dictfile:
-                word = line[0:-1].lower()
-                prev_char = ""
-                fail = False
+        try:
+            with open(self.dict_file) as dictfile:
+                for line in dictfile:
+                    word = line[0:-1].lower()
+                    prev_char = ""
+                    fail = False
 
-                if len(word) >= self.length_min and \
-                   len(word) <= self.length_max:
-                    #TODO disallow word if char is adjecent to prev_char
-                    for char in word:
-                        if char not in self.allowed_chars:
-                            fail = True
-                            break
-                        if self.double is False and prev_char == char:
-                            fail = True
-                            break
-                        prev_char = char
+                    if len(word) >= self.length_min and \
+                       len(word) <= self.length_max:
+                        #TODO disallow word if char is adjecent to prev_char
+                        for char in word:
+                            if char not in self.allowed_chars:
+                                fail = True
+                                break
+                            if self.double is False and prev_char == char:
+                                fail = True
+                                break
+                            prev_char = char
 
-                    # TODO finish this
-                    #if word in verb_words and not self.verbs:
-                    #    fail = True
-                    #    break
-                    #
-                    #if word in noun_words and not self.nouns:
-                    #    fail = True
-                    #    break
-                    if fail is False:
-                        words.append(word)
+                        # TODO finish this
+                        #if word in verb_words and not self.verbs:
+                        #    fail = True
+                        #    break
+                        #
+                        #if word in noun_words and not self.nouns:
+                        #    fail = True
+                        #    break
+                        if fail is False:
+                            words.append(word)
 
-        if len(words) is 0:
-            return ["Error: Invalid input"]
+            if len(words) is 0:
+                return ["Error: Invalid input"]
 
-        selected_words = []
-        if self.number != 0:
-            for _ in range(self.number):
-                selected_words.append(random.choice(words))
-        else:
-            selected_words = words
-        return selected_words
+            selected_words = []
+            if self.number != 0:
+                for _ in range(self.number):
+                    selected_words.append(random.choice(words))
+            else:
+                selected_words = words
+            return selected_words
+        except:
+            return ["Error: Dict file does not exist"]
 
 def main(argv):
     """Generate words for use in passphrases and print them to stdout."""
