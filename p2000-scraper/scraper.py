@@ -60,6 +60,7 @@ class Scraper():
         self.threads = threads
 
     def scrape(self):
+        """Scrape items from and add them to the database."""
         new_messages = 0
         print('Scraping', self.number_of_pages, 'pages...')
 
