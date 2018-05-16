@@ -1,9 +1,4 @@
 """Show the web pages."""
-# TODO Dockerize
-# TODO Add short useful info about passphrases, with sources
-# TODO Checkboxes for verbs, nouns, etc.
-# TODO Add reset button to form
-# TODO Dropdown menu to select wordlist
 
 from flask import render_template, Markup
 from app import app
