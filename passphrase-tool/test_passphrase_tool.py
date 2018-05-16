@@ -29,10 +29,7 @@ def test_maximum_length():
 def test_invalid_input():
     generator = PassphraseGenerator(length_min=7, length_max=6, number=500)
     results = generator.generate()
-    pass
-    generator = PassphraseGenerator(length_min=7, length_max=8, number=500)
-    results = generator.generate()
-    pass
+    assert results == ["Error: Invalid input"]
 
 def test_webserver_running(client):
     rv = client.get('/')
