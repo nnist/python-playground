@@ -4,16 +4,16 @@
 # TODO Scrape street + number from message details
 # TODO Scrape city name from message details
 
-from bs4 import BeautifulSoup
 import urllib.request
 from urllib.error import URLError, HTTPError
 import sys
 import re
 import sqlite3
-from tqdm import *
 import getopt
 from multiprocessing.dummy import Pool
 import os
+from tqdm import tqdm
+from bs4 import BeautifulSoup
 
 def init_database():
     """Initialize the database."""
