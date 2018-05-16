@@ -26,6 +26,14 @@ def test_maximum_length():
     for result in results:
         assert len(result) <= 12
 
+def test_invalid_input():
+    generator = PassphraseGenerator(length_min=7, length_max=6, number=500)
+    results = generator.generate()
+    pass
+    generator = PassphraseGenerator(length_min=7, length_max=8, number=500)
+    results = generator.generate()
+    pass
+
 def test_webserver_running(client):
     rv = client.get('/')
     assert rv.data != b'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.</p>\n'

@@ -53,6 +53,9 @@ class PassphraseGenerator:
                     if fail is False:
                         words.append(word)
 
+        if len(words) is 0:
+            return ["Error: Invalid input"]
+
         selected_words = []
         if self.number != 0:
             for _ in range(self.number):
