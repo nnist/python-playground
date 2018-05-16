@@ -87,6 +87,8 @@ class Scraper():
 
     def scrape_page(self, url):
         """Scrape page for P2000 items and return them."""
+        # TODO Instead of returning num of new messages, return the messages themselves
+        # TODO Use a dict (p2000 item) instead of many variables
         status = None
         new_messages = 0
         html, status = self.get_page(url)
@@ -192,6 +194,7 @@ def main(argv):
     offset = 0
     threads = 1
 
+    # TODO Switch to argparse
     try:
         opts, args = getopt.getopt(argv, "hp:o:t:", ["pages=", "offset=",
                                                      "threads="])
