@@ -196,8 +196,8 @@ def main(argv):
 
     # TODO Switch to argparse
     try:
-        opts, args = getopt.getopt(argv, "hp:o:t:", ["pages=", "offset=",
-                                                     "threads="])
+        opts = getopt.getopt(argv, "hp:o:t:", ["pages=", "offset=",
+                                               "threads="])
     except getopt.GetoptError:
         print('usage: p2000.py -p <pages> -o <offset> -t <threads>')
         sys.exit(2)
