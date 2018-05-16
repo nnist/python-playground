@@ -1,6 +1,8 @@
 import argparse
 import sys, os
 
+# TODO Remove words with numbers or special characters in them
+
 def sanitize(filename):
     wordlist = []
     
