@@ -8,8 +8,8 @@ import pytest
 def client():
     """Create a client for testing the web interface."""
     app.config['TESTING'] = True
-    client = app.test_client()
-    return client
+    test_client = app.test_client()
+    return test_client
 
 def test_number_of_words():
     """Test the number of words."""
@@ -41,7 +41,7 @@ def test_invalid_input():
     results = generator.generate()
     assert results == ["Error: Dict file does not exist"]
 
-def test_webserver_running(client):
+def test_webserver_running(test_client):
     """Test to see if the webserver is running."""
-    rv = client.get('/')
+    rv = test_client.get('/')
     assert rv.data != b'<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 3.2 Final//EN">\n<title>404 Not Found</title>\n<h1>Not Found</h1>\n<p>The requested URL was not found on the server.  If you entered the URL manually please check your spelling and try again.</p>\n'
