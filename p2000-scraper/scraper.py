@@ -55,17 +55,22 @@ def insert_into_database(date_time, calltype, region, priority, postcode, detail
 class Scraper():
     """Scrape P2000 items from website and add them to the database."""
     def __init__(self, number_of_pages=1, offset=0, threads=1):
+        self.number_of_pages = number_of_pages
+        self.offset = offset
+        self.threads = threads
+
+    def scrape(self):
         new_messages = 0
-        print('Scraping', number_of_pages, 'pages...')
+        print('Scraping', self.number_of_pages, 'pages...')
 
         # Build a list of urls to send to threads
         urls = []
-        for i in range(number_of_pages):
+        for i in range(self.number_of_pages):
             urls.append("http://www.p2000-online.net/p2000.php?Pagina=" +
-                        str(i+offset) + "&AutoRefresh=uit")
+                        str(i+self.offset) + "&AutoRefresh=uit")
 
         # Scrape pages using threads
-        pool = Pool(threads)
+        pool = Pool(self.threads)
         iterations = pool.imap_unordered(self.scrape_page, urls)
         pbar = tqdm(total=len(urls))
         for result in enumerate(iterations):
@@ -206,6 +211,7 @@ def main(argv):
     init_database()
 
     scraper = Scraper(number_of_pages, offset, threads)
+    scraper.scrape()
 
 if __name__ == "__main__":
     try:
