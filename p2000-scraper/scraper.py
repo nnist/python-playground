@@ -1,6 +1,5 @@
+"""Scrape P2000 information from a website and store it in a database."""
 # https://nl.wikipedia.org/wiki/P2000_(netwerk)
-
-# This script scrapes P2000 information from a website and stores it in a database.
 
 # TODO Scrape street + number from message details
 # TODO Scrape city name from message details
@@ -17,7 +16,7 @@ from multiprocessing.dummy import Pool
 import os
 
 def init_database():
-    # Initialize the database
+    """Initialize the database."""
     conn = sqlite3.connect('data/p2000.db')
     cur = conn.cursor()
     cur.execute("""CREATE TABLE IF NOT EXISTS messages (
@@ -34,7 +33,7 @@ def init_database():
     cur.close()
 
 def insert_into_database(date_time, calltype, region, priority, postcode, details, capcodes):
-    # Insert P2000 item into database
+    """Insert P2000 item into database."""
     conn = sqlite3.connect('data/p2000.db')
     cur = conn.cursor()
 
@@ -54,6 +53,7 @@ def insert_into_database(date_time, calltype, region, priority, postcode, detail
     return False
 
 class Scraper():
+    """Scrape P2000 items from website and add them to the database."""
     def __init__(self, number_of_pages=1, offset=0, threads=1):
         new_messages = 0
         print('Scraping', number_of_pages, 'pages...')
@@ -80,7 +80,7 @@ class Scraper():
         print('Done! Added', new_messages, 'new messages.')
 
     def scrape_page(self, url):
-        # Scrape page for P2000 items and return them
+        """Scrape page for P2000 items and return them."""
         status = None
         new_messages = 0
         html, status = self.get_page(url)
@@ -151,7 +151,7 @@ class Scraper():
         return new_messages
 
     def get_page(self, url):
-        # Get page and return it and the status code
+        """Get page and return it and the status code."""
         status = None
         html = None
         while status is not 200:
@@ -180,6 +180,7 @@ class Scraper():
         return html, status
 
 def main(argv):
+    """Scrape P2000 information from a website and store it in a database."""
     # ~415300 pages in total at Jun 5 2017
     number_of_pages = 1
     offset = 0
