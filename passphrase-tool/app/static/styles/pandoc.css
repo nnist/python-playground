@@ -120,16 +120,38 @@ hr {
 }
 
 pre, code, kbd, samp {
-  color: #000;
+  white-space: pre-wrap;
+  white-space: pre;
+  word-wrap: break-word;
+  background-color: #E8E8E8;
   font-family: monospace, monospace;
   _font-family: 'courier new', monospace;
   font-size: 0.98em;
+  border: 1px solid #b0b0b0;
 }
 
 pre {
-  white-space: pre;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  padding: 0.5em;
+  border-radius: 5px;
+  margin-left:  0.5em;
+  margin-right: 0.5em;
+}
+
+code {
+  padding-left:  0.3em;
+  padding-right: 0.3em;
+  padding-top:    0.1em;
+  padding-bottom: 0.1em;
+  border-radius: 3px;
+}
+
+pre > code
+{
+  padding: 0;
+  border: none;
+  border-radius: none;
+  background-color: inherit;
+  box-shadow: none;
 }
 
 b, strong {
