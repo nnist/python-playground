@@ -1,10 +1,11 @@
 """Show the web pages."""
 
+from os import listdir
 from flask import render_template, Markup
 from app import app
 from passphrase_tool import PassphraseGenerator
 from flask_wtf import FlaskForm
-from wtforms import StringField, SubmitField, BooleanField
+from wtforms import StringField, SubmitField, BooleanField, SelectField
 from wtforms.fields.html5 import IntegerField
 from wtforms.validators import DataRequired
 
@@ -16,6 +17,19 @@ class OptionsForm(FlaskForm):
     double = BooleanField('Double')
     adjecent = BooleanField('Adjecent')
     refresh = SubmitField('Refresh')
+    
+    # Get wordlists and populate dropdown menu
+    wordlists = []
+    for filename in listdir():
+        if filename.endswith(".txt"):
+            wordlists.append(filename)
+    
+    choices = []
+    for wordlist in wordlists:
+        choices.append((wordlist, wordlist))
+
+    wordlist = SelectField('Wordlist', choices=choices, default=wordlists[1],
+                           validators=[DataRequired()], coerce=str)
 
 @app.route('/', methods=['GET', 'POST'])
 @app.route('/index', methods=['GET', 'POST'])
@@ -51,6 +65,12 @@ def index():
 
     double = options_form.double.data
     adjecent = options_form.adjecent.data
+
+    wordlist_data = options_form.wordlist.data
+    if wordlist_data == '' or wordlist_data is None:
+        options_form.wordlist.data = dict_file
+    else:    
+        dict_file = options_form.wordlist.data
 
     if not options_form.validate_on_submit():
         print('error: form not valid')

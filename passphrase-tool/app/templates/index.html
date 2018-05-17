@@ -32,6 +32,8 @@
                         {{ options_form.max_length(size=2, min=1) }}<br>
                         {{ options_form.allowed_chars.label }}
                         {{ options_form.allowed_chars(size=24, title="Only show words using these characters") }}<br>
+                        {{ options_form.wordlist.label }}
+                        {{ options_form.wordlist(title="Wordlist to use") }}<br>
                         {{ options_form.double.label }}
                         {{ options_form.double(title="Show words with double characters") }}<br>
                         {{ options_form.adjecent.label }}
