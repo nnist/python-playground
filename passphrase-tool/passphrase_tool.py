@@ -103,16 +103,11 @@ def main(argv):
         "--nouns", help="Allow nouns", action="store_true"
     )
     args = parser.parse_args(argv)
-    options = {}
-    options['length_min'] = args.min
-    options['length_max'] = args.max
-    options['double'] = bool(args.double)
-    options['adjecent'] = bool(args.adjecent)
-    options['dict_file'] = args.file
-    options['allowed_chars'] = args.chars
-    options['number'] = args.number
-    options['verbs'] = bool(args.verbs)
-    options['nouns'] = bool(args.nouns)
+    options = {'length_min':args.min, 'length_max':args.max,
+               'double':bool(args.double), 'adjecent':bool(args.adjecent),
+               'dict_file':args.file, 'allowed_chars':args.chars,
+               'number':args.number, 'verbs':bool(args.verbs),
+               'nouns':bool(args.nouns)}
 
     generator = PassphraseGenerator(options)
     result = generator.generate()
