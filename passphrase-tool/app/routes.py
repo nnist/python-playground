@@ -35,41 +35,41 @@ class OptionsForm(FlaskForm):
 @app.route('/index', methods=['GET', 'POST'])
 def index():
     """Show the index page."""
-    length_min = 6
-    length_max = 8
-    double = False
-    adjecent = False
-    dict_file = "nederlands3.txt"
-    allowed_chars = "qwertiopasdfgjkl"
-    number = 12
+    options = {}
+    options['length_min'] = 6
+    options['length_max'] = 8
+    options['double'] = False
+    options['adjecent'] = False
+    options['dict_file'] = "nederlands3.txt"
+    options['allowed_chars'] = "qwertiopasdfgjkl"
+    options['number'] = 12
 
     options_form = OptionsForm()
 
     if options_form.min_length.data == '' or options_form.min_length.data is None:
-        options_form.min_length.data = length_min
+        options_form.min_length.data = options['length_min']
     else:
-        length_min = int(options_form.min_length.data)
+        options['length_min'] = int(options_form.min_length.data)
 
     if options_form.max_length.data == '' or options_form.max_length.data is None:
-        options_form.max_length.data = length_max
+        options_form.max_length.data = options['length_max']
     else:
-        length_max = int(options_form.max_length.data)
+        options['length_max'] = int(options_form.max_length.data)
 
     if options_form.allowed_chars.data == '' or options_form.allowed_chars.data is None:
-        options_form.allowed_chars.data = allowed_chars
+        options_form.allowed_chars.data = options['allowed_chars']
     else:
-        allowed_chars = options_form.allowed_chars.data
+        options['allowed_chars'] = options_form.allowed_chars.data
 
-    double = options_form.double.data
-    adjecent = options_form.adjecent.data
+    options['double'] = options_form.double.data
+    options['adjecent'] = options_form.adjecent.data
 
     if options_form.wordlist.data == '' or options_form.wordlist.data is None:
-        options_form.wordlist.data = dict_file
+        options_form.wordlist.data = options['dict_file']
     else:
-        dict_file = options_form.wordlist.data
+        options['dict_file'] = options_form.wordlist.data
 
-    generator = PassphraseGenerator(length_min, length_max, double, adjecent,
-                                    allowed_chars, dict_file, number)
+    generator = PassphraseGenerator(options)
     results = generator.generate()
 
     # Format and display words

@@ -6,39 +6,37 @@ import os
 
 class PassphraseGenerator:
     """Generate passphrase words."""
-    def __init__(self, length_min=1, length_max=999, double=False,
-                 adjecent=False, allowed_chars="qwertiopasdfgjkl",
-                 dict_file="nederlands3.txt", number=3, verbs=True,
-                 nouns=True):
-        self.dict_file = dict_file
-        self.length_min = length_min
-        self.length_max = length_max
-        self.allowed_chars = allowed_chars
-        self.double = double
-        self.number = number
-        self.adjecent = adjecent
-        self.verbs = verbs
-        self.nouns = nouns
+    def __init__(self, options):
+        self.options = options
+        default_options = {'length_min':1, 'length_max':999, 'double':False,
+                'adjecent':False, 'allowed_chars':'qwertiopasdfgjkl',
+                'dict_file':'nederlands3.txt', 'number':3, 'verbs':True,
+                'nouns':True} 
+
+        for key in default_options:
+            if key not in options:
+                self.options[key] = default_options[key]
 
     def generate(self):
         """Open the dictionary file and return a list of words that
            meet the requirements."""
         words = []
         try:
-            with open(self.dict_file) as dictfile:
+            with open(self.options['dict_file']) as dictfile:
                 for line in dictfile:
                     word = line[0:-1].lower()
                     prev_char = ""
                     fail = False
 
-                    if len(word) >= self.length_min and \
-                       len(word) <= self.length_max:
+                    if len(word) >= self.options['length_min'] and \
+                       len(word) <= self.options['length_max']:
                         #TODO disallow word if char is adjecent to prev_char
                         for char in word:
-                            if char not in self.allowed_chars:
+                            if char not in self.options['allowed_chars']:
                                 fail = True
                                 break
-                            if self.double is False and prev_char == char:
+                            if self.options['double'] is False and \
+                               prev_char == char:
                                 fail = True
                                 break
                             prev_char = char
@@ -58,8 +56,8 @@ class PassphraseGenerator:
                 return ["Error: Invalid input"]
 
             selected_words = []
-            if self.number != 0:
-                for _ in range(self.number):
+            if self.options['number'] != 0:
+                for _ in range(self.options['number']):
                     selected_words.append(random.choice(words))
             else:
                 selected_words = words
@@ -105,19 +103,18 @@ def main(argv):
         "--nouns", help="Allow nouns", action="store_true"
     )
     args = parser.parse_args(argv)
-    length_min = args.min
-    length_max = args.max
-    double = bool(args.double)
-    adjecent = bool(args.adjecent)
-    dict_file = args.file
-    allowed_chars = args.chars
-    number = args.number
-    verbs = bool(args.verbs)
-    nouns = bool(args.nouns)
+    options = {}
+    options['length_min'] = args.min
+    options['length_max'] = args.max
+    options['double'] = bool(args.double)
+    options['adjecent'] = bool(args.adjecent)
+    options['dict_file'] = args.file
+    options['allowed_chars'] = args.chars
+    options['number'] = args.number
+    options['verbs'] = bool(args.verbs)
+    options['nouns'] = bool(args.nouns)
 
-    generator = PassphraseGenerator(length_min, length_max, double, adjecent,
-                                    allowed_chars, dict_file, number,
-                                    verbs, nouns)
+    generator = PassphraseGenerator(options)
     result = generator.generate()
     print(result)
 
