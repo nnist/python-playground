@@ -18,34 +18,62 @@ class PassphraseGenerator:
                 self.options[key] = default_options[key]
 
     def is_adjecent_char(self, char1, char2):
-        if char1 == '' or char2 == '': return False
-        elif char1 == 'a' and char2 in 'qwsxz': return True
-        elif char1 == 'b' and char2 in 'vfghn': return True
-        elif char1 == 'c' and char2 in 'xsdfv': return True
-        elif char1 == 'd' and char2 in 'swerfvcx': return True
-        elif char1 == 'e' and char2 in 'wsdfr': return True
-        elif char1 == 'f' and char2 in 'dertgbvc': return True
-        elif char1 == 'g' and char2 in 'vfrtyhnb': return True
-        elif char1 == 'h' and char2 in 'gtyujmnb': return True
-        elif char1 == 'i' and char2 in 'ujklo': return True
-        elif char1 == 'j' and char2 in 'hyuikmn': return True
-        elif char1 == 'k' and char2 in 'mjuiol': return True
-        elif char1 == 'l' and char2 in 'kiop': return True
-        elif char1 == 'm' and char2 in 'njk': return True
-        elif char1 == 'n' and char2 in 'bhjm': return True
-        elif char1 == 'o' and char2 in 'iklp': return True
-        elif char1 == 'p' and char2 in 'ol': return True
-        elif char1 == 'q' and char2 in 'asw': return True
-        elif char1 == 'r' and char2 in 'edfgt': return True
-        elif char1 == 's' and char2 in 'aqwedcxz': return True
-        elif char1 == 't' and char2 in 'rfghy': return True
-        elif char1 == 'u' and char2 in 'yhjki': return True
-        elif char1 == 'v' and char2 in 'cfgb': return True
-        elif char1 == 'w' and char2 in 'qasde': return True
-        elif char1 == 'x' and char2 in 'zsdc': return True
-        elif char1 == 'y' and char2 in 'tghju': return True
-        elif char1 == 'z' and char2 in 'asx': return True
-        else: return False
+        if char1 == '' or char2 == '':
+            return False
+        elif char1 == 'a' and char2 in 'qwsxz':
+            return True
+        elif char1 == 'b' and char2 in 'vfghn':
+            return True
+        elif char1 == 'c' and char2 in 'xsdfv':
+            return True
+        elif char1 == 'd' and char2 in 'swerfvcx':
+            return True
+        elif char1 == 'e' and char2 in 'wsdfr':
+            return True
+        elif char1 == 'f' and char2 in 'dertgbvc':
+            return True
+        elif char1 == 'g' and char2 in 'vfrtyhnb':
+            return True
+        elif char1 == 'h' and char2 in 'gtyujmnb':
+            return True
+        elif char1 == 'i' and char2 in 'ujklo':
+            return True
+        elif char1 == 'j' and char2 in 'hyuikmn':
+            return True
+        elif char1 == 'k' and char2 in 'mjuiol':
+            return True
+        elif char1 == 'l' and char2 in 'kiop':
+            return True
+        elif char1 == 'm' and char2 in 'njk':
+            return True
+        elif char1 == 'n' and char2 in 'bhjm':
+            return True
+        elif char1 == 'o' and char2 in 'iklp':
+            return True
+        elif char1 == 'p' and char2 in 'ol':
+            return True
+        elif char1 == 'q' and char2 in 'asw':
+            return True
+        elif char1 == 'r' and char2 in 'edfgt':
+            return True
+        elif char1 == 's' and char2 in 'aqwedcxz':
+            return True
+        elif char1 == 't' and char2 in 'rfghy':
+            return True
+        elif char1 == 'u' and char2 in 'yhjki':
+            return True
+        elif char1 == 'v' and char2 in 'cfgb':
+            return True
+        elif char1 == 'w' and char2 in 'qasde':
+            return True
+        elif char1 == 'x' and char2 in 'zsdc':
+            return True
+        elif char1 == 'y' and char2 in 'tghju':
+            return True
+        elif char1 == 'z' and char2 in 'asx':
+            return True
+        else:
+            return False
 
     def generate(self):
         """Open the dictionary file and return a list of words that
