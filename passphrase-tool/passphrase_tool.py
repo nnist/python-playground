@@ -18,6 +18,7 @@ class PassphraseGenerator:
                 self.options[key] = default_options[key]
 
     def is_adjecent_char(self, char1, char2):
+        """Check if char1 is adjecent to char2 on the qwerty keyboard."""
         pairs = {'a':'qwsxz', 'b':'vfghn', 'c':'xsdfv', 'd':'swerfvcx',
                  'e':'wsdfr', 'f':'dertgbvc', 'g':'vfrtyhnb', 'h':'gtyujmnb',
                  'i':'ujklo', 'j':'hyuikmn', 'k':'mjuiol', 'l':'kiop',
