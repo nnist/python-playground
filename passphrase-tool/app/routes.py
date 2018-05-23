@@ -68,10 +68,6 @@ def index():
     else:
         dict_file = options_form.wordlist.data
 
-    if not options_form.validate_on_submit():
-        print('error: form not valid')
-        # TODO Properly handle this
-
     generator = PassphraseGenerator(length_min, length_max, double, adjecent,
                                     allowed_chars, dict_file, number)
     results = generator.generate()
