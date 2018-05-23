@@ -9,9 +9,9 @@ class PassphraseGenerator:
     def __init__(self, options):
         self.options = options
         default_options = {'length_min':1, 'length_max':999, 'double':False,
-                'adjecent':False, 'allowed_chars':'qwertiopasdfgjkl',
-                'dict_file':'nederlands3.txt', 'number':3, 'verbs':True,
-                'nouns':True} 
+                           'adjecent':False, 'allowed_chars':'qwertiopasdfgjkl',
+                           'dict_file':'nederlands3.txt', 'number':3,
+                           'verbs':True, 'nouns':True}
 
         for key in default_options:
             if key not in options:
