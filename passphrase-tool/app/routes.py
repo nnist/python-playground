@@ -45,29 +45,25 @@ def index():
 
     options_form = OptionsForm()
 
-    min_length_data = options_form.min_length.data
-    if min_length_data == '' or min_length_data is None:
+    if options_form.min_length.data == '' or options_form.min_length.data is None:
         options_form.min_length.data = length_min
     else:
-        length_min = int(min_length_data)
+        length_min = int(options_form.min_length.data)
 
-    max_length_data = options_form.max_length.data
-    if max_length_data == '' or max_length_data is None:
+    if options_form.max_length.data == '' or options_form.max_length.data is None:
         options_form.max_length.data = length_max
     else:
-        length_max = int(max_length_data)
+        length_max = int(options_form.max_length.data)
 
-    allowed_chars_data = options_form.allowed_chars.data
-    if allowed_chars_data == '' or allowed_chars_data is None:
+    if options_form.allowed_chars.data == '' or options_form.allowed_chars.data is None:
         options_form.allowed_chars.data = allowed_chars
     else:
-        allowed_chars = allowed_chars_data
+        allowed_chars = options_form.allowed_chars.data
 
     double = options_form.double.data
     adjecent = options_form.adjecent.data
 
-    wordlist_data = options_form.wordlist.data
-    if wordlist_data == '' or wordlist_data is None:
+    if options_form.wordlist.data == '' or options_form.wordlist.data is None:
         options_form.wordlist.data = dict_file
     else:
         dict_file = options_form.wordlist.data
