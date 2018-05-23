@@ -33,6 +33,19 @@ def test_maximum_length():
     for result in results:
         assert len(result) <= 12
 
+def test_is_adjecent_char():
+    """Test the is_adjecent_char function."""
+    generator = PassphraseGenerator({})
+    word = 'hebeosteotomy'
+    prev_letter = ''
+    for letter in word:
+        assert generator.is_adjecent_char(letter, prev_letter) is False
+        prev_letter = letter
+    assert generator.is_adjecent_char('a', 's') is True
+    assert generator.is_adjecent_char('a', 'e') is False
+    assert generator.is_adjecent_char('r', 't') is True
+    assert generator.is_adjecent_char('r', 'p') is False
+
 def test_invalid_key():
     options={'catface':True,}
     generator = PassphraseGenerator(options)
