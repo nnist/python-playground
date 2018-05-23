@@ -17,13 +17,13 @@ class OptionsForm(FlaskForm):
     double = BooleanField('Double')
     adjecent = BooleanField('Adjecent')
     refresh = SubmitField('Refresh')
-    
+
     # Get wordlists and populate dropdown menu
     wordlists = []
     for filename in listdir():
         if filename.endswith(".txt"):
             wordlists.append(filename)
-    
+
     choices = []
     for wordlist in wordlists:
         choices.append((wordlist, wordlist))
@@ -69,7 +69,7 @@ def index():
     wordlist_data = options_form.wordlist.data
     if wordlist_data == '' or wordlist_data is None:
         options_form.wordlist.data = dict_file
-    else:    
+    else:
         dict_file = options_form.wordlist.data
 
     if not options_form.validate_on_submit():
