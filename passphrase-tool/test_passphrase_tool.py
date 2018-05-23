@@ -33,6 +33,12 @@ def test_maximum_length():
     for result in results:
         assert len(result) <= 12
 
+def test_invalid_key():
+    options={'catface':True,}
+    generator = PassphraseGenerator(options)
+    results = generator.generate()
+    assert len(results) > 1
+
 def test_invalid_input():
     """Test for invalid input."""
     options={'length_min':7, 'length_max':6, 'number':500}
