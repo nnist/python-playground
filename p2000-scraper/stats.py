@@ -17,10 +17,10 @@ def query_database(query):
 
 def pretty_print(rows):
     """Tabulate the input, colorize it and then print it."""
-    for i in range(len(rows)):
+    for row_num in range(len(rows)):
         row = []
-        for ii in range(len(rows[i])):
-            item = rows[i][ii]
+        for item_num in range(len(rows[row_num])):
+            item = rows[row_num][item_num]
             if item == "Brandweer":
                 item = "\033[31m" + item + "\033[0m"
             elif item == "Ambulance":
@@ -28,12 +28,12 @@ def pretty_print(rows):
             elif item == "Politie":
                 item = "\033[34m" + item + "\033[0m"
 
-            if ii == 2: # Region
+            if item_num == 2: # Region
                 item = "\033[33m" + item + "\033[0m"
-            elif ii == 5: # Details
+            elif item_num == 5: # Details
                 item = "\033[1m" + item + "\033[0m"
             row.append(item)
-        rows[i] = row
+        rows[row_num] = row
     print(tabulate(rows))
 
 # results = query_database("""SELECT * FROM messages WHERE capcodes NOT NULL"""))
