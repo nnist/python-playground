@@ -1,5 +1,5 @@
 """Test the passphrase tool and the web interface."""
-from passphrase_tool import PassphraseGenerator
+from passphrase-tool import PassphraseGenerator
 from app import app
 import pytest
 
