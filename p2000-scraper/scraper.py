@@ -9,7 +9,7 @@ from urllib.error import URLError, HTTPError
 import sys
 import re
 import sqlite3
-import getopt
+import argparse
 from multiprocessing.dummy import Pool
 import os
 from tqdm import tqdm
@@ -190,31 +190,24 @@ class Scraper():
 def main(argv):
     """Scrape P2000 information from a website and store it in a database."""
     # ~415300 pages in total at Jun 5 2017
-    number_of_pages = 1
-    offset = 0
-    threads = 1
-
-    # TODO Switch to argparse
-    try:
-        opts = getopt.getopt(argv, "hp:o:t:", ["pages=", "offset=",
-                                               "threads="])
-    except getopt.GetoptError:
-        print('usage: p2000.py -p <pages> -o <offset> -t <threads>')
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print('usage: p2000.py -p <pages> -o <offset> -t <threads>')
-            sys.exit()
-        elif opt in ("-p", "--pages"):
-            number_of_pages = int(arg)
-        elif opt in ("-o", "--offset"):
-            offset = int(arg)
-        elif opt in ("-t", "--threads"):
-            threads = int(arg)
+    parser = argparse.ArgumentParser(
+        description="""Scrape P2000 information from a website and store it
+                       in a database."""
+    )
+    parser.add_argument(
+        '-p', '--pages', help="Number of pages to scrape", type=int, default=1
+    )
+    parser.add_argument(
+        '-o', '--offset', help="Offset to start at", type=int, default=0
+    )
+    parser.add_argument(
+        '-t', '--threads', help="Show first message", type=int, default=1
+    )
+    args = parser.parse_args(argv)
 
     init_database()
 
-    scraper = Scraper(number_of_pages, offset, threads)
+    scraper = Scraper(args.pages, args.offset, args.threads)
     scraper.scrape()
 
 if __name__ == "__main__":
