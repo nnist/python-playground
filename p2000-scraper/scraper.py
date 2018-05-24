@@ -76,9 +76,11 @@ class Scraper():
         pool = Pool(self.threads)
         iterations = pool.imap_unordered(self.scrape_page, urls)
         pbar = tqdm(total=len(urls))
-        for result in enumerate(iterations):
+        for results in enumerate(iterations):
             pbar.update()
-            new_messages += result[1]
+            for p2000_item in results[1]:
+                if insert_into_database(p2000_item):
+                    new_messages += 1
 
         # Close the bar and pool
         pbar.close()
@@ -89,12 +91,11 @@ class Scraper():
 
     def scrape_page(self, url):
         """Scrape page for P2000 items and return them."""
-        # TODO Instead of returning num of new messages, return the messages themselves
-        # TODO Insert the p2000 items into db in scrape() function instead of here
         status = None
         new_messages = 0
         html, status = self.get_page(url)
         table = None
+        p2000_items = []
 
         if status is 200:
             soup = BeautifulSoup(html, 'html.parser')
@@ -115,9 +116,8 @@ class Scraper():
 
                     if date is not None: # Regular message
                         if p2000_item['date_time'] is not None:
-                            if insert_into_database(p2000_item):
-                                new_messages += 1
-                            # Clear all variables
+                            # Add item to list and clear it for next use
+                            p2000_items.append(p2000_item)
                             p2000_item = {'date_time':None, 'calltype':None,
                                           'region':None, 'priority':None,
                                           'postcode':None, 'details':None,
@@ -152,7 +152,7 @@ class Scraper():
                         capcode_details = cells[4].find(text=True)
                         if capcode_details is not None: # Definitely a capcode
                             p2000_item['capcodes'] += [capcode_details]
-        return new_messages
+        return p2000_items
 
     def get_page(self, url):
         """Get page and return it and the status code."""
