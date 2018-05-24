@@ -41,14 +41,14 @@ def main(argv):
                             """)
     print('\nMost recent message')
     pretty_print(results)
-    
+
     # Get first message
     results = query_database("""SELECT MIN(date_time), type, region, priority, postcode, details
                                 FROM messages
                             """)
     print('\nFirst message')
     pretty_print(results)
-    
+
     # Count all call types
     results = query_database("""SELECT type, COUNT(*)
                                 FROM messages
@@ -56,7 +56,7 @@ def main(argv):
                             """)
     print('\nNumber of calls per type')
     pretty_print(results)
-    
+
     # Return number of messages per region
     results = query_database("""SELECT region, COUNT(*) AS cnt
                                 FROM messages
@@ -65,7 +65,7 @@ def main(argv):
                             """)
     print('\nNumber of messages per region')
     print(tabulate(results))
-    
+
     # Get results of last half hour
     dt = datetime.today() - timedelta(minutes=30)
     results = query_database("SELECT date_time, type, region, priority, postcode, details FROM messages WHERE date_time > '" + str(dt) + "' ORDER BY date_time ASC")
