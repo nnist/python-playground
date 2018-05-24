@@ -23,7 +23,7 @@ def pretty_print(rows):
         for item in enumerate(row[1]):
             colorized_item = item[1]
             if item[1] is None:
-                break
+                colorized_item = ''
             if item[1] == "Brandweer":
                 colorized_item = "\033[31m" + item[1] + "\033[0m" # Red
             elif item[1] == "Ambulance":
