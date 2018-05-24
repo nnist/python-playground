@@ -22,6 +22,8 @@ def pretty_print(rows):
         pretty_row = list(row[1])
         for item in enumerate(row[1]):
             colorized_item = item[1]
+            if item[1] is None:
+                break
             if item[1] == "Brandweer":
                 colorized_item = "\033[31m" + item[1] + "\033[0m"
             elif item[1] == "Ambulance":
