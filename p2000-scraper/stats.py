@@ -30,6 +30,8 @@ def pretty_print(rows):
                 colorized_item = "\033[32m" + item[1] + "\033[0m" # Green
             elif item[1] == "Politie":
                 colorized_item = "\033[34m" + item[1] + "\033[0m" # Blue
+            elif item[1] == "KNRM":
+                colorized_item = "\033[33m" + item[1] + "\033[0m" # Yellow
 
             if item[0] == 2: # Region
                 colorized_item = "\033[33m" + item[1] + "\033[0m" # Yellow
