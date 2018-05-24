@@ -200,7 +200,7 @@ def main(argv):
         '-o', '--offset', help="Offset to start at", type=int, default=0
     )
     parser.add_argument(
-        '-t', '--threads', help="Show first message", type=int, default=1
+        '-t', '--threads', help="Number of threads to use", type=int, default=1
     )
     args = parser.parse_args(argv)
 
