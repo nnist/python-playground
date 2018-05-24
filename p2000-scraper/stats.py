@@ -72,10 +72,10 @@ def main(argv):
     print(tabulate(results))
 
     # Get results of last half hour
-    dt = datetime.today() - timedelta(minutes=30)
+    date_time = datetime.today() - timedelta(minutes=30)
     results = query_database("""SELECT date_time, type, region, priority,
                                 postcode, details FROM messages WHERE date_time
-                                > '""" + str(dt) + """'
+                                > '""" + str(date_time) + """'
                                 ORDER BY date_time ASC""")
     print('\nAll messages of last half hour')
     pretty_print(results)
