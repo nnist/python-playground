@@ -90,6 +90,7 @@ class Scraper():
     def scrape_page(self, url):
         """Scrape page for P2000 items and return them."""
         # TODO Instead of returning num of new messages, return the messages themselves
+        # TODO Insert the p2000 items into db in scrape() function instead of here
         status = None
         new_messages = 0
         html, status = self.get_page(url)
