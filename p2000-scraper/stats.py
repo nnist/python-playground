@@ -17,24 +17,25 @@ def query_database(query):
 
 def pretty_print(rows):
     """Tabulate the input, colorize it and then print it."""
-    for row_num in range(len(rows)):
-        row = []
-        for item_num in range(len(rows[row_num])):
-            item = rows[row_num][item_num]
-            if item == "Brandweer":
-                item = "\033[31m" + item + "\033[0m"
-            elif item == "Ambulance":
-                item = "\033[32m" + item + "\033[0m"
-            elif item == "Politie":
-                item = "\033[34m" + item + "\033[0m"
+    pretty_rows = []
+    for row in enumerate(rows):
+        pretty_row = []
+        for item in enumerate(row[1]):
+            colorized_item = ''
+            if item[1] == "Brandweer":
+                colorized_item = "\033[31m" + item[1] + "\033[0m"
+            elif item[1] == "Ambulance":
+                colorized_item = "\033[32m" + item[1] + "\033[0m"
+            elif item[1] == "Politie":
+                colorized_item = "\033[34m" + item[1] + "\033[0m"
 
-            if item_num == 2: # Region
-                item = "\033[33m" + item + "\033[0m"
-            elif item_num == 5: # Details
-                item = "\033[1m" + item + "\033[0m"
-            row.append(item)
-        rows[row_num] = row
-    print(tabulate(rows))
+            if item[0] == 2: # Region
+                colorized_item = "\033[33m" + item[1] + "\033[0m"
+            elif item[0] == 5: # Details
+                colorized_item = "\033[1m" + item[1] + "\033[0m"
+            pretty_row.append(colorized_item)
+        pretty_rows.append(pretty_row)
+    print(tabulate(pretty_rows))
 
 # results = query_database("""SELECT * FROM messages WHERE capcodes NOT NULL"""))
 # results = query_database("""SELECT * FROM messages WHERE type='Brandweer'""")
