@@ -69,7 +69,10 @@ def main(argv):
 
     # Get results of last half hour
     dt = datetime.today() - timedelta(minutes=30)
-    results = query_database("SELECT date_time, type, region, priority, postcode, details FROM messages WHERE date_time > '" + str(dt) + "' ORDER BY date_time ASC")
+    results = query_database("""SELECT date_time, type, region, priority,
+                                postcode, details FROM messages WHERE date_time
+                                > '""" + str(dt) + """'
+                                ORDER BY date_time ASC""")
     print('\nAll messages of last half hour')
     pretty_print(results)
 
