@@ -115,7 +115,8 @@ def main(argv):
                                     WHERE date_time
                                     > '""" + str(date_time) + """'
                                     ORDER BY date_time ASC""")
-        print('\nAll messages of last', args.time, 'minutes')
+        print('\nAll messages of last', args.time, 'minutes (' +
+              str(len(results)), 'total)')
         pretty_print(results)
 
 if __name__ == "__main__":
