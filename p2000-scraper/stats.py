@@ -1,9 +1,9 @@
 """Show useful information about P2000 items in the database."""
 import sqlite3
-from tabulate import tabulate
-from datetime import datetime, timedelta
 import os
 import sys
+from datetime import datetime, timedelta
+from tabulate import tabulate
 
 def query_database(query):
     """Query the database and return the results in a list."""
