@@ -21,7 +21,7 @@ class OptionsForm(FlaskForm):
     # Get wordlists and populate dropdown menu
     wordlists = []
     for filename in listdir():
-        if filename.endswith(".txt"):
+        if filename.endswith('.txt'):
             wordlists.append(filename)
 
     choices = []
@@ -40,8 +40,8 @@ def index():
     options['length_max'] = 8
     options['double'] = False
     options['adjecent'] = False
-    options['dict_file'] = "nederlands3.txt"
-    options['allowed_chars'] = "qwertiopasdfgjkl"
+    options['dict_file'] = 'nederlands3.txt'
+    options['allowed_chars'] = 'qwertiopasdfgjkl'
     options['number'] = 12
 
     options_form = OptionsForm()
@@ -73,10 +73,10 @@ def index():
     results = generator.generate()
 
     # Format and display words
-    words = ""
+    words = ''
     for word in results:
-        words += word + "<br>"
+        words += word + '<br>'
     words = Markup(words)
 
-    return render_template('index.html', title='Passphrase tool', words=words,
+    return render_template('index.html', title="Passphrase tool", words=words,
                            options_form=options_form)

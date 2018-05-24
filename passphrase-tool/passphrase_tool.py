@@ -40,7 +40,7 @@ class PassphraseGenerator:
             with open(self.options['dict_file']) as dictfile:
                 for line in dictfile:
                     word = line[0:-1].lower()
-                    prev_char = ""
+                    prev_char = ''
                     fail = False
 
                     if len(word) >= self.options['length_min'] and \
@@ -89,36 +89,36 @@ def main(argv):
         description="""Gets quick to type words from a dictionary."""
     )
     parser.add_argument(
-        "--min", help="Minimum length of words",
+        '--min', help="Minimum length of words",
         default=1, type=int
     )
     parser.add_argument(
-        "--max", help="Maximum length of words",
+        '--max', help="Maximum length of words",
         default=999, type=int
     )
     parser.add_argument(
-        "-f", help="Dictionary file to use",
-        dest="file", default="nederlands3.txt"
+        '-f', help="Dictionary file to use",
+        dest='file', default='nederlands3.txt'
     )
     parser.add_argument(
-        "-c", "--chars", help="Characters to allow",
-        default="qwertiopasdfgjkl"
+        '-c', '--chars', help="Characters to allow",
+        default='qwertiopasdfgjkl'
     )
     parser.add_argument(
-        "-d", "--double", help="Allow double chars", action="store_true"
+        '-d', '--double', help="Allow double chars", action='store_true'
     )
     parser.add_argument(
-        "-a", "--adjecent", help="Allow adjecent chars", action="store_true"
+        '-a', '--adjecent', help="Allow adjecent chars", action='store_true'
     )
     parser.add_argument(
-        "-n", "--number", help="Number of words to return",
+        '-n', '--number', help="Number of words to return",
         default=0, type=int
     )
     parser.add_argument(
-        "--verbs", help="Allow verbs", action="store_true"
+        '--verbs', help="Allow verbs", action='store_true'
     )
     parser.add_argument(
-        "--nouns", help="Allow nouns", action="store_true"
+        '--nouns', help="Allow nouns", action='store_true'
     )
     args = parser.parse_args(argv)
     options = {'length_min':args.min, 'length_max':args.max,
@@ -131,11 +131,11 @@ def main(argv):
     result = generator.generate()
     print(result)
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     try:
         main(sys.argv[1:])
     except KeyboardInterrupt:
-        print('Interrupted by user.')
+        print("Interrupted by user.")
         try:
             sys.exit(0)
         except SystemExit:
