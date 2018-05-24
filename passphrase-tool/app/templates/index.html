@@ -12,6 +12,7 @@
 </style>
 <html>
     <head>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/pandoc.css') }}">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <meta charset="UTF-8">
         <title>Passphrase tool</title>
@@ -21,6 +22,7 @@
         <h1>Passphrase tool</h1>
         <div>
             <div class="left">
+                <h3>Settings</h3>
                 <form action="" method="post">
                     {{ options_form.hidden_tag() }}
                     <p>
@@ -30,6 +32,8 @@
                         {{ options_form.max_length(size=2, min=1) }}<br>
                         {{ options_form.allowed_chars.label }}
                         {{ options_form.allowed_chars(size=24, title="Only show words using these characters") }}<br>
+                        {{ options_form.wordlist.label }}
+                        {{ options_form.wordlist(title="Wordlist to use") }}<br>
                         {{ options_form.double.label }}
                         {{ options_form.double(title="Show words with double characters") }}<br>
                         {{ options_form.adjecent.label }}
@@ -41,7 +45,8 @@
                 </form>
             </div>
             <div class="right">
-            <p>{{ words }}</p>
+            <h3>Results</h3>
+            <pre><code>{{ words }}</code></pre>
             </div>
         </div>
         <div style="width: 100%; float: left;">

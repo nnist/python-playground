@@ -9,7 +9,7 @@ from urllib.error import URLError, HTTPError
 import sys
 import re
 import sqlite3
-import getopt
+import argparse
 from multiprocessing.dummy import Pool
 import os
 from tqdm import tqdm
@@ -32,7 +32,7 @@ def init_database():
     conn.commit()
     cur.close()
 
-def insert_into_database(date_time, calltype, region, priority, postcode, details, capcodes):
+def insert_into_database(item):
     """Insert P2000 item into database."""
     conn = sqlite3.connect('data/p2000.db')
     cur = conn.cursor()
@@ -40,13 +40,15 @@ def insert_into_database(date_time, calltype, region, priority, postcode, detail
     # Check if message already exists
     result = cur.execute("""SELECT * FROM messages WHERE date_time=? \
                             AND type=? AND region=? AND details=?""",
-                         (date_time, calltype, region, details))
+                         (item['date_time'], item['calltype'], item['region'],
+                          item['details']))
     results = result.fetchall()
     if not results:
         cur.execute("""INSERT INTO messages \
                        VALUES (NULL, ?, ?, ?, ?, ?, ?, ?)""",
-                    (date_time, calltype, region, priority, postcode,
-                     details, capcodes))
+                    (item['date_time'], item['calltype'], item['region'],
+                     item['priority'], item['postcode'],
+                     item['details'], str(item['capcodes'])))
         conn.commit()
         cur.close()
         return True
@@ -74,9 +76,11 @@ class Scraper():
         pool = Pool(self.threads)
         iterations = pool.imap_unordered(self.scrape_page, urls)
         pbar = tqdm(total=len(urls))
-        for result in enumerate(iterations):
+        for results in enumerate(iterations):
             pbar.update()
-            new_messages += result[1]
+            for p2000_item in results[1]:
+                if insert_into_database(p2000_item):
+                    new_messages += 1
 
         # Close the bar and pool
         pbar.close()
@@ -87,12 +91,11 @@ class Scraper():
 
     def scrape_page(self, url):
         """Scrape page for P2000 items and return them."""
-        # TODO Instead of returning num of new messages, return the messages themselves
-        # TODO Use a dict (p2000 item) instead of many variables
         status = None
         new_messages = 0
         html, status = self.get_page(url)
         table = None
+        p2000_items = []
 
         if status is 200:
             soup = BeautifulSoup(html, 'html.parser')
@@ -102,13 +105,9 @@ class Scraper():
             status = 400
         else:
             status = 200
-            date_time = None
-            calltype = None
-            region = None
-            priority = None
-            postcode = None
-            details = None
-            capcodes = []
+            p2000_item = {'date_time':None, 'calltype':None, 'region':None,
+                          'priority':None, 'postcode':None, 'details':None,
+                          'capcodes':[]}
 
             for row in table.findAll("tr"):
                 cells = row.findAll("td")
@@ -116,53 +115,53 @@ class Scraper():
                     date = cells[0].find(text=True)
 
                     if date is not None: # Regular message
-                        if date_time is not None:
-                            if insert_into_database(date_time, calltype, region,
-                                                    priority, postcode, details,
-                                                    str(capcodes)):
-                                new_messages += 1
-                            # Clear all variables
-                            date_time = None
-                            calltype = None
-                            region = None
-                            priority = None
-                            postcode = None
-                            details = None
-                            capcodes = []
+                        if p2000_item['date_time'] is not None:
+                            # Add item to list and clear it for next use
+                            p2000_items.append(p2000_item)
+                            p2000_item = {'date_time':None, 'calltype':None,
+                                          'region':None, 'priority':None,
+                                          'postcode':None, 'details':None,
+                                          'capcodes':[]}
 
                         # Convert date and time to YYYY-MM-DD HH:MM:SS
                         time = cells[1].find(text=True)
-                        date = '20' + date[6:8] + '-' + date[3:5] + '-' + date[0:2]
-                        date_time = date + ' ' + time
+                        date = '20' + date[6:8] + '-' + date[3:5] + \
+                               '-' + date[0:2]
+                        p2000_item['date_time'] = date + ' ' + time
 
-                        calltype = cells[2].find(text=True)
-                        region = cells[3].find(text=True)
-                        details = cells[4].find(text=True)
+                        p2000_item['calltype'] = cells[2].find(text=True)
+                        p2000_item['region'] = cells[3].find(text=True)
+                        p2000_item['details'] = cells[4].find(text=True)
 
                         # Find priority code in details (ex. A1, A 1, P 1)
-                        re_results = re.findall(r'(PRIO|Prio|[ABP])\s*(\d)', details)
+                        re_results = re.findall(r'(PRIO|Prio|[ABP])\s*(\d)', \
+                                                p2000_item['details'])
                         if len(re_results) > 0:
                             a = re_results[0][0]
                             b = re_results[0][1]
                             if a == 'PRIO' or a == 'Prio':
-                                priority = 'P' + b
+                                p2000_item['priority'] = 'P' + b
                             else:
-                                priority = str(a) + str(b)
+                                p2000_item['priority'] = str(a) + str(b)
+
                         # Find postcode (ex. 2356DF)
-                        re_results = re.findall(r'\d{4}[A-Z]{2}', details)
+                        re_results = re.findall(r'\d{4}[A-Z]{2}',
+                                                p2000_item['details'])
                         if re_results != []:
-                            postcode = str(re_results[0])
+                            p2000_item['postcode'] = str(re_results[0])
+
                     else: # Capcode or empty
                         capcode_details = cells[4].find(text=True)
                         if capcode_details is not None: # Definitely a capcode
-                            capcodes += [capcode_details]
-        return new_messages
+                            p2000_item['capcodes'] += [capcode_details]
+
+        return p2000_items
 
     def get_page(self, url):
         """Get page and return it and the status code."""
         status = None
         html = None
-        while status is not 200:
+        while status is not 200: # TODO Do not retry indefinitely
             try:
                 req = urllib.request.Request(url)#, headers=headers)
                 response = urllib.request.urlopen(req, timeout=2)
@@ -190,31 +189,24 @@ class Scraper():
 def main(argv):
     """Scrape P2000 information from a website and store it in a database."""
     # ~415300 pages in total at Jun 5 2017
-    number_of_pages = 1
-    offset = 0
-    threads = 1
-
-    # TODO Switch to argparse
-    try:
-        opts = getopt.getopt(argv, "hp:o:t:", ["pages=", "offset=",
-                                               "threads="])
-    except getopt.GetoptError:
-        print('usage: p2000.py -p <pages> -o <offset> -t <threads>')
-        sys.exit(2)
-    for opt, arg in opts:
-        if opt == '-h':
-            print('usage: p2000.py -p <pages> -o <offset> -t <threads>')
-            sys.exit()
-        elif opt in ("-p", "--pages"):
-            number_of_pages = int(arg)
-        elif opt in ("-o", "--offset"):
-            offset = int(arg)
-        elif opt in ("-t", "--threads"):
-            threads = int(arg)
+    parser = argparse.ArgumentParser(
+        description="""Scrape P2000 information from a website and store it
+                       in a database."""
+    )
+    parser.add_argument(
+        '-p', '--pages', help="Number of pages to scrape", type=int, default=1
+    )
+    parser.add_argument(
+        '-o', '--offset', help="Offset to start at", type=int, default=0
+    )
+    parser.add_argument(
+        '-t', '--threads', help="Number of threads to use", type=int, default=1
+    )
+    args = parser.parse_args(argv)
 
     init_database()
 
-    scraper = Scraper(number_of_pages, offset, threads)
+    scraper = Scraper(args.pages, args.offset, args.threads)
     scraper.scrape()
 
 if __name__ == "__main__":

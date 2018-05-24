@@ -1,8 +1,8 @@
 # To do
 - Add short useful info about passphrases, with sources
 - Checkboxes for verbs, nouns, etc.
-- Dropdown menu to select wordlist
+- Add selector for only or no verbs/nouns
+- Add dictionaries for verbs and nouns
 - Add reset button to form
-- CSS styling
 - English and Dutch languages
 - Dockerize
