@@ -1,3 +1,4 @@
+"""Show useful information about P2000 items in the database."""
 import sqlite3
 from tabulate import tabulate
 from datetime import datetime, timedelta
@@ -5,6 +6,7 @@ import os
 import sys
 
 def query_database(query):
+    """Query the database and return the results in a list."""
     conn = sqlite3.connect('data/p2000.db')
     cur = conn.cursor()
     result = cur.execute(query)
@@ -13,6 +15,7 @@ def query_database(query):
     return results
 
 def pretty_print(rows):
+    """Tabulate the input, colorize it and then print it."""
     for i in range(len(rows)):
         row = []
         for ii in range(len(rows[i])):
@@ -36,6 +39,7 @@ def pretty_print(rows):
 # results = query_database("""SELECT * FROM messages WHERE type='Brandweer'""")
 
 def main(argv):
+    """Show useful information about P2000 items in the database."""
     # Get most recent message
     results = query_database("""SELECT MAX(date_time), type, region, priority, postcode, details
                                 FROM messages
