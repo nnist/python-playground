@@ -143,15 +143,18 @@ class Scraper():
                                 p2000_item['priority'] = 'P' + b
                             else:
                                 p2000_item['priority'] = str(a) + str(b)
+
                         # Find postcode (ex. 2356DF)
                         re_results = re.findall(r'\d{4}[A-Z]{2}',
                                                 p2000_item['details'])
                         if re_results != []:
                             p2000_item['postcode'] = str(re_results[0])
+
                     else: # Capcode or empty
                         capcode_details = cells[4].find(text=True)
                         if capcode_details is not None: # Definitely a capcode
                             p2000_item['capcodes'] += [capcode_details]
+
         return p2000_items
 
     def get_page(self, url):
