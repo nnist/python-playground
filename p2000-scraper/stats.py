@@ -19,9 +19,9 @@ def pretty_print(rows):
     """Tabulate the input, colorize it and then print it."""
     pretty_rows = []
     for row in enumerate(rows):
-        pretty_row = []
+        pretty_row = list(row[1])
         for item in enumerate(row[1]):
-            colorized_item = ''
+            colorized_item = item[1]
             if item[1] == "Brandweer":
                 colorized_item = "\033[31m" + item[1] + "\033[0m"
             elif item[1] == "Ambulance":
@@ -33,7 +33,7 @@ def pretty_print(rows):
                 colorized_item = "\033[33m" + item[1] + "\033[0m"
             elif item[0] == 5: # Details
                 colorized_item = "\033[1m" + item[1] + "\033[0m"
-            pretty_row.append(colorized_item)
+            pretty_row[item[0]] = colorized_item
         pretty_rows.append(pretty_row)
     print(tabulate(pretty_rows))
 
