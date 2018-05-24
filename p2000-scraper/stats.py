@@ -1,7 +1,8 @@
 import sqlite3
 from tabulate import tabulate
 from datetime import datetime, timedelta
-import os, sys
+import os
+import sys
 
 def query_database(query):
     conn = sqlite3.connect('data/p2000.db')
