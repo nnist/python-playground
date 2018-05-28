@@ -103,6 +103,7 @@ class Scraper():
         if table is None:
             status = 400
         else:
+            # TODO Refactor
             status = 200
             p2000_item = {'date_time':None, 'calltype':None, 'region':None,
                           'priority':None, 'postcode':None, 'details':None,
