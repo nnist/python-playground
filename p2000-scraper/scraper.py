@@ -137,12 +137,12 @@ class Scraper():
                         re_results = re.findall(r'(PRIO|Prio|[ABP])\s*(\d)', \
                                                 p2000_item['details'])
                         if len(re_results) > 0:
-                            a = re_results[0][0]
-                            b = re_results[0][1]
-                            if a == 'PRIO' or a == 'Prio':
-                                p2000_item['priority'] = 'P' + b
+                            part1 = re_results[0][0]
+                            part2 = re_results[0][1]
+                            if part1 == 'PRIO' or part1 == 'Prio':
+                                p2000_item['priority'] = 'P' + part2
                             else:
-                                p2000_item['priority'] = str(a) + str(b)
+                                p2000_item['priority'] = str(part1) + str(part2)
 
                         # Find postcode (ex. 2356DF)
                         re_results = re.findall(r'\d{4}[A-Z]{2}',
