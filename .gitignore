@@ -2,3 +2,4 @@ selenium/geckodriver.log
 flaskstuff/flask*
 *__pycache__*
 *.pytest_cache*
+p2000-scraper/data*
