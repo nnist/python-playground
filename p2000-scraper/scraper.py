@@ -92,7 +92,6 @@ class Scraper():
     def scrape_page(self, url):
         """Scrape page for P2000 items and return them."""
         status = None
-        new_messages = 0
         html, status = self.get_page(url)
         table = None
         p2000_items = []
