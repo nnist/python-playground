@@ -1,9 +1,11 @@
+"""Test the scraper."""
 import re
 import pytest
 from scraper import Scraper
 
 @pytest.mark.timeout(10)
 def test_scraper_get_page():
+    """Test the get_page method to make sure valid html is returned."""
     scraper = Scraper(1, 0, 1)
     html, status = scraper.get_page("http://www.p2000-online.net/p2000.php?\
                                      Pagina=0&AutoRefresh=uit")
@@ -12,6 +14,7 @@ def test_scraper_get_page():
 
 @pytest.mark.timeout(10)
 def test_scraper_scrape_page():
+    """Ensure all scraped fields contain valid information."""
     scraper = Scraper(3, 0, 1)
     results = scraper.scrape_page("http://www.p2000-online.net/p2000.php?\
                                      Pagina=0&AutoRefresh=uit")
@@ -32,6 +35,7 @@ def test_scraper_scrape_page():
 
 @pytest.mark.timeout(10)
 def test_scraper():
+    """Ensure the scraper runs at all."""
     scraper = Scraper(1, 0, 1)
     scraper.scrape()
     assert True
