@@ -22,17 +22,21 @@ def pretty_print(rows):
         pretty_row = list(row[1])
         for item in enumerate(row[1]):
             colorized_item = item[1]
+            if item[1] is None:
+                colorized_item = ''
             if item[1] == "Brandweer":
-                colorized_item = "\033[31m" + item[1] + "\033[0m"
+                colorized_item = "\033[31m" + item[1] + "\033[0m" # Red
             elif item[1] == "Ambulance":
-                colorized_item = "\033[32m" + item[1] + "\033[0m"
+                colorized_item = "\033[32m" + item[1] + "\033[0m" # Green
             elif item[1] == "Politie":
-                colorized_item = "\033[34m" + item[1] + "\033[0m"
+                colorized_item = "\033[34m" + item[1] + "\033[0m" # Blue
+            elif item[1] == "KNRM":
+                colorized_item = "\033[33m" + item[1] + "\033[0m" # Yellow
 
             if item[0] == 2 and item[1] is not None: # Region
-                colorized_item = "\033[33m" + item[1] + "\033[0m"
+                colorized_item = "\033[33m" + item[1] + "\033[0m" # Yellow
             elif item[0] == 5: # Details
-                colorized_item = "\033[1m" + item[1] + "\033[0m"
+                colorized_item = "\033[1m" + item[1] + "\033[0m" # Bold
             pretty_row[item[0]] = colorized_item
         pretty_rows.append(pretty_row)
     print(tabulate(pretty_rows))
@@ -115,7 +119,8 @@ def main(argv):
                                     WHERE date_time
                                     > '""" + str(date_time) + """'
                                     ORDER BY date_time ASC""")
-        print('\nAll messages of last', args.time, 'minutes')
+        print('\nAll messages of last', args.time, 'minutes (' +
+              str(len(results)), 'total)')
         pretty_print(results)
 
 if __name__ == "__main__":
