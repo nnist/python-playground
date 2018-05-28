@@ -1,2 +1,4 @@
 selenium/geckodriver.log
 flaskstuff/flask*
+*__pycache__*
+*.pytest_cache*
