@@ -29,7 +29,7 @@ def pretty_print(rows):
             elif item[1] == "Politie":
                 colorized_item = "\033[34m" + item[1] + "\033[0m"
 
-            if item[0] == 2: # Region
+            if item[0] == 2 and item[1] is not None: # Region
                 colorized_item = "\033[33m" + item[1] + "\033[0m"
             elif item[0] == 5: # Details
                 colorized_item = "\033[1m" + item[1] + "\033[0m"
