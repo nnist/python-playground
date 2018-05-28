@@ -97,7 +97,7 @@ class Scraper():
         table = None
         p2000_items = []
 
-        if status is 200:
+        if status == 200:
             soup = BeautifulSoup(html, 'html.parser')
             table = soup.find("table", {"style" : "align:center"})
 
@@ -161,7 +161,7 @@ class Scraper():
         """Get page and return it and the status code."""
         status = None
         html = None
-        while status is not 200: # TODO Do not retry indefinitely
+        while status != 200: # TODO Do not retry indefinitely
             try:
                 req = urllib.request.Request(url)#, headers=headers)
                 response = urllib.request.urlopen(req, timeout=2)
