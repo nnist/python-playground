@@ -166,20 +166,20 @@ class Scraper():
                 req = urllib.request.Request(url)#, headers=headers)
                 response = urllib.request.urlopen(req, timeout=2)
                 html = response.read()
-            except HTTPError as e:
-                status = e.code
-            except URLError as e:
-                if str(e.reason) == 'timed out':
+            except HTTPError as ex:
+                status = ex.code
+            except URLError as ex:
+                if str(ex.reason) == 'timed out':
                     status = 408
                 else:
-                    status = re.findall(r'[0-9]{3,}', str(e.reason))
+                    status = re.findall(r'[0-9]{3,}', str(ex.reason))
                     if status == []:
                         status = 520 # Unknown error
-            except Exception as e:
-                if str(e) == 'timed out':
+            except Exception as ex:
+                if str(ex) == 'timed out':
                     status = 408
                 else:
-                    status = re.findall(r'[0-9]{3,}', str(e))
+                    status = re.findall(r'[0-9]{3,}', str(ex))
                     if status == []:
                         status = 520 # Unknown error
             else:
