@@ -1,5 +1,5 @@
-import pytest
 import re
+import pytest
 from scraper import Scraper
 
 @pytest.mark.timeout(10)
