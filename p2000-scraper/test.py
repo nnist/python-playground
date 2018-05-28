@@ -1,5 +1,6 @@
 import pytest
-from scraper import *
+import re
+from scraper import Scraper
 
 @pytest.mark.timeout(10)
 def test_scraper_get_page():
