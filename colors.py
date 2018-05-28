@@ -1,3 +1,4 @@
+"""Print the ANSI escape codes for the base16 colors."""
 from tabulate import tabulate
 
 SELECTION = [1, 2, 3, 4, 7, 8] + list(range(30, 48)) + list(range(90, 108))
