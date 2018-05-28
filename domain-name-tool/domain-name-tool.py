@@ -74,7 +74,7 @@ def main(argv):
         except KeyboardInterrupt:
             print('\nInterrupted by user.')
             sys.exit(0)
-        except:
+        except Exception as ex:
             print("\033[32mavailable\033[0m")
             f.write('{} is available\n'.format(domains[i]))
         else:
