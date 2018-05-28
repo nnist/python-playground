@@ -8,7 +8,7 @@ def test_scraper_get_page():
     html, status = scraper.get_page("http://www.p2000-online.net/p2000.php?\
                                      Pagina=0&AutoRefresh=uit")
     print(html)
-    assert html is not None and status is 200
+    assert html is not None and status == 200
 
 @pytest.mark.timeout(10)
 def test_scraper_scrape_page():
