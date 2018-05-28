@@ -135,7 +135,7 @@ class Scraper():
                         # Find priority code in details (ex. A1, A 1, P 1)
                         re_results = re.findall(r'(PRIO|Prio|[ABP])\s*(\d)', \
                                                 p2000_item['details'])
-                        if len(re_results) > 0:
+                        if re_results != []:
                             part1 = re_results[0][0]
                             part2 = re_results[0][1]
                             if part1 == 'PRIO' or part1 == 'Prio':
