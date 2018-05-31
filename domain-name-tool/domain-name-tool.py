@@ -66,7 +66,8 @@ def main(argv):
 
     # Try to get whois information for domain to see if it is available or not
     for i in range(len(domains)):
-        print("[" + str(i+1) + "/" + str(len(domains)) + "] " + domains[i], end=" -> ", flush=True)
+        print("[" + str(i+1) + "/" + str(len(domains)) + "] " + domains[i],
+              end=" -> ", flush=True)
         # TODO Fix Socket Error: timed out
         try:
             w = whois.whois(domains[i])
