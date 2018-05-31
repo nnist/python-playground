@@ -75,7 +75,7 @@ def main(argv):
             print("\033[32mavailable\033[0m")
             f.write('{} is available\n'.format(domains[i]))
         else:
-            if(all(x==None for x in w.values())):
+            if(all(x == None for x in w.values())):
                 print("\033[33munknown\033[0m")
                 f.write('{} might be available\n'.format(domains[i]))
             else:
