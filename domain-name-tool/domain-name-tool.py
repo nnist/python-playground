@@ -16,29 +16,29 @@ def main(argv):
         they are registered."""
     )
     parser.add_argument(
-    "min",
-    help="Minimum length of domain",
-    default=4, type=int
+        "min",
+        help="Minimum length of domain",
+        default=4, type=int
     )
     parser.add_argument(
-    "max",
-    help="Maximum length of domain",
-    default=5, type=int
+        "max",
+        help="Maximum length of domain",
+        default=5, type=int
     )
     parser.add_argument(
-    "tld",
-    help="Top level domain to use",
-    default=".com"
+        "tld",
+        help="Top level domain to use",
+        default=".com"
     )
     parser.add_argument(
-    "-f",
-    help="Dictionary file to use",
-    dest="file", default="dictionary.txt"
+        "-f",
+        help="Dictionary file to use",
+        dest="file", default="dictionary.txt"
     )
     parser.add_argument(
-    "-d",
-    help="Delay",
-    dest="delay", default=2.0, type=float
+        "-d",
+        help="Delay",
+        dest="delay", default=2.0, type=float
     )
 
     args = parser.parse_args()
