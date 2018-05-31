@@ -1,7 +1,6 @@
 # https://en.wikipedia.org/wiki/Domain_hack
 
 import datetime
-import whois
 import string
 import argparse
 import sys
@@ -9,6 +8,7 @@ import time
 import itertools
 import urllib.request
 from urllib.error import URLError, HTTPError
+import whois
 
 def main(argv):
     parser = argparse.ArgumentParser(
