@@ -73,12 +73,16 @@ def main(argv):
             process = subprocess.run(['whois', domain], timeout=1, stdout=subprocess.PIPE,
                 stderr=subprocess.PIPE, check=True, universal_newlines=True)
             output = process.stdout
-            if 'NOT AVAILABLE' in output or 'NOT ALLOWED' in output:
+            if 'NOT AVAILABLE' in output or 'NOT ALLOWED' in output\
+            or 'active' in output:
                 print("\033[31mnot available\033[0m")
                 f.write('{} is not available\n'.format(domains[i]))
-            elif 'NOT FOUND' in output or 'AVAILABLE' in output:
+            elif 'NOT FOUND' in output or 'AVAILABLE' in output\
+            or 'is free' in output:
                 print("\033[32mavailable\033[0m")
                 f.write('{} is available\n'.format(domains[i]))
+            elif 'exceeded' in output:
+                print('throttled')
             else:
                 print("\033[33munknown\033[0m")
                 f.write('{} might be available\n'.format(domains[i]))
