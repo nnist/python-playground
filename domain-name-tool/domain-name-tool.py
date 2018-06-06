@@ -5,6 +5,7 @@ import whois
 import string
 import argparse
 import sys
+import os
 import time
 import itertools
 import urllib.request
