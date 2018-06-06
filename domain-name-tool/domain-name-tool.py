@@ -85,6 +85,10 @@ def main(argv):
                 print(process.stdout)
             
             time.sleep(delay)
+        except subprocess.CalledProcessError as ex:
+            print('error')
+        except subprocess.TimeoutExpired as ex:
+            print('timeout')
         except Exception as ex:
             print('Exception:', ex)
     
