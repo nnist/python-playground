@@ -1,7 +1,6 @@
 # https://en.wikipedia.org/wiki/Domain_hack
 
 import datetime
-import whois
 import string
 import argparse
 import sys
@@ -9,6 +8,7 @@ import os
 import time
 import itertools
 import urllib.request
+import subprocess
 from urllib.error import URLError, HTTPError
 
 def main(argv):
@@ -68,22 +68,25 @@ def main(argv):
     # Try to get whois information for domain to see if it is available or not
     for i in range(len(domains)):
         print("[" + str(i+1) + "/" + str(len(domains)) + "] " + domains[i], end=" -> ", flush=True)
-        # TODO Fix Socket Error: timed out
         try:
-            w = whois.whois(domains[i])
-            time.sleep(delay)
-        except KeyboardInterrupt:
-            print('\nInterrupted by user.')
-            sys.exit(0)
-        except Exception as ex:
-            print("\033[32mavailable\033[0m")
-            f.write('{} is available\n'.format(domains[i]))
-        else:
-            if(all(x==None for x in w.values())):
+            domain = domains[i]
+            process = subprocess.run(['whois', domain], timeout=1, stdout=subprocess.PIPE,
+                stderr=subprocess.PIPE, check=True, universal_newlines=True)
+            output = process.stdout
+            if 'NOT AVAILABLE' in output or 'NOT ALLOWED' in output:
+                print("\033[31mnot available\033[0m")
+                f.write('{} is not available\n'.format(domains[i]))
+            elif 'NOT FOUND' in output or 'AVAILABLE' in output:
+                print("\033[32mavailable\033[0m")
+                f.write('{} is available\n'.format(domains[i]))
+            else:
                 print("\033[33munknown\033[0m")
                 f.write('{} might be available\n'.format(domains[i]))
-            else:
-                print("\033[31mregistered\033[0m")
+                print(process.stdout)
+            
+            time.sleep(delay)
+        except Exception as ex:
+            print('Exception:', ex)
     
     f.close()
 
