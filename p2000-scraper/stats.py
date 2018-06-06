@@ -6,6 +6,11 @@ import argparse
 from datetime import datetime, timedelta
 from tabulate import tabulate
 
+# TODO Live updates (-f RATE) scrape first page every RATE seconds and print
+#      when new items are added.
+# TODO Filter for priorities
+# TODO Filter for call types
+
 def query_database(query):
     """Query the database and return the results in a list."""
     conn = sqlite3.connect('data/p2000.db')
