@@ -89,8 +89,6 @@ def main(argv):
             print('error')
         except subprocess.TimeoutExpired as ex:
             print('timeout')
-        except Exception as ex:
-            print('Exception:', ex)
     
     f.close()
 
