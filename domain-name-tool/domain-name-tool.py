@@ -105,9 +105,9 @@ def main(argv):
             print('error')
         elif status == 'timeout':
             print('timeout')
-        
+
         time.sleep(delay)
-    
+
     f.close()
 
 if __name__ == "__main__":
