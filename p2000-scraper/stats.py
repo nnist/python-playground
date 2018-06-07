@@ -10,6 +10,7 @@ from tabulate import tabulate
 #      when new items are added.
 # TODO Filter for priorities
 # TODO Filter for call types
+# TODO Make object oriented
 
 def query_database(query):
     """Query the database and return the results in a list."""
