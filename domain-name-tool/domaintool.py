@@ -1,3 +1,4 @@
+"""Get domain hacks from a dictionary and test them for availability."""
 # https://en.wikipedia.org/wiki/Domain_hack
 import datetime
 import argparse
