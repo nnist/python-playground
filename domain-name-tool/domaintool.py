@@ -118,7 +118,7 @@ def main(argv):
         dest="delay", default=2.0, type=float
     )
 
-    args = parser.parse_args()
+    args = parser.parse_args(argv)
     length_min = args.min
     length_max = args.max
     tld = args.tld
