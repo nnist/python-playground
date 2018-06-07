@@ -2,16 +2,11 @@
 # TODO unit tests
 
 import datetime
-import string
 import argparse
 import sys
 import os
 import time
-import itertools
-import urllib.request
 import subprocess
-from urllib.error import URLError, HTTPError
-import whois
 
 def main(argv):
     parser = argparse.ArgumentParser(
