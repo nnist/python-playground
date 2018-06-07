@@ -32,7 +32,7 @@ def test_cli():
     output = process.stdout.split(b'\n')
     assert output[0] == b'usage: domaintool.py [-h] [-f FILE] ' +\
                         b'[-d DELAY] min max tld'
-    
+
     process = subprocess.run(['python3 domaintool.py 13 13 be -d 0.1'],
                              shell=True,
                              timeout=10,
