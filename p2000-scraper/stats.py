@@ -50,6 +50,31 @@ def pretty_print(rows):
 # results = query_database("""SELECT * FROM messages WHERE capcodes NOT NULL"""))
 # results = query_database("""SELECT * FROM messages WHERE type='Brandweer'""")
 
+class Stats():
+    def __init__(self):
+        blah
+
+    def query_database(query):
+        return []
+    
+    def pretty_print(rows):
+        return []
+
+    def get_most_recent_msg():
+        return []
+
+    def get_first_msg():
+        return []
+
+    def get_all_types():
+        return []
+
+    def get_regions():
+        return []
+
+    def get_time_period():
+        return []
+
 def main(argv):
     """Show useful information about P2000 items in the database."""
     parser = argparse.ArgumentParser(
