@@ -87,6 +87,7 @@ class DomainChecker():
             return 'timeout'
 
 def main(argv):
+    """Get domain hacks from a dictionary and test them for availability."""
     parser = argparse.ArgumentParser(
         description="""Finds domain hacks and tests them to see if
         they are registered."""
