@@ -75,7 +75,7 @@ def main(argv):
         for line in f:
             line = line[0:-1].lower()
             if(line.endswith(tld)) and '-' not in line:
-                if(len(line) >= length_min and len(line) <= length_max):
+                if len(line) >= length_min and len(line) <= length_max:
                     domain = line[0:-(len(tld))] + "." + tld
                     domains.append(domain)
 
