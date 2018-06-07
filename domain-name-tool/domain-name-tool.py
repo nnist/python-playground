@@ -10,7 +10,8 @@ import subprocess
 
 class DomainChecker():
     """Get domain hacks from a dictionary and test them for availability."""
-    def __init__(self, length_min, length_max, tld, dict_file, chars, delay):
+    def __init__(self, length_min, length_max, tld, dict_file="dictionary.txt",
+                 chars="abcdefghijklmnopqrstuvwxyz", delay=2.0):
         self.length_min = length_min
         self.length_max = length_max
         self.tld = tld
