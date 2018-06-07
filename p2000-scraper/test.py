@@ -72,13 +72,13 @@ def test_stats_cli():
     assert output[0] == b'usage: stats.py [-h] [-a] [-r] [-f] [--type] ' +\
                         b'[--region] [-t TIME]'
 
-    #process = subprocess.run(['python3 stats.py'],
-    #                         shell=True,
-    #                         timeout=10,
-    #                         stdout=subprocess.PIPE,
-    #                         stderr=subprocess.PIPE, check=True)
-    #output = process.stdout.split(b'\n')
-    #assert output[0] == b'Nothing to show.'
+    process = subprocess.run(['python3 stats.py'],
+                             shell=True,
+                             timeout=10,
+                             stdout=subprocess.PIPE,
+                             stderr=subprocess.PIPE, check=True)
+    output = process.stdout.split(b'\n')
+    assert output[0] == b'Nothing to show.'
 
     process = subprocess.run(['python3 stats.py -r'],
                              shell=True,

@@ -129,6 +129,10 @@ def main(argv):
               str(len(results)), 'total)')
         pretty_print(results)
 
+    if not args.all & args.time & args.type & args.recent & args.first\
+           & args.region:
+        print('Nothing to show.')
+
 if __name__ == "__main__":
     try:
         main(sys.argv[1:])
