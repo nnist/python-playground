@@ -38,22 +38,21 @@ class DomainChecker():
         f.write('\n{}\n'.format(datetime.datetime.now()))
 
         # Try to get whois information for domain to see if it is available
-        for i in range(len(domains)):
-            print("[" + str(i+1) + "/" + str(len(domains)) + "] " +
-                  domains[i], end=" -> ", flush=True)
-            domain = domains[i]
-            status = self.check_domain(domain)
+        for domain in enumerate(domains):
+            print("[" + str(domain[0] + 1) + "/" + str(len(domains)) + "] " +
+                  domain[1], end=" -> ", flush=True)
+            status = self.check_domain(domain[1])
             if status == 'not_available':
                 print("\033[31mnot available\033[0m")
-                f.write('{} is not available\n'.format(domains[i]))
+                f.write('{} is not available\n'.format(domain[1]))
             elif status == 'available':
                 print("\033[32mavailable\033[0m")
-                f.write('{} is available\n'.format(domains[i]))
+                f.write('{} is available\n'.format(domain[1]))
             elif status == 'throttled':
                 print('throttled')
             elif status == 'unknown':
                 print("\033[33munknown\033[0m")
-                f.write('{} might be available\n'.format(domains[i]))
+                f.write('{} might be available\n'.format(domain[1]))
             elif status == 'error':
                 print('error')
             elif status == 'timeout':
