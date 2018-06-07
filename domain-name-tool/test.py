@@ -1,6 +1,6 @@
 """Test the domain name tool."""
 import pytest
-from domain-name-tool import DomainChecker
+from domaintool import DomainChecker
 
 def test_get_domains():
     """Test the get_domains method."""
