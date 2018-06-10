@@ -10,6 +10,7 @@ from tabulate import tabulate
 #      when new items are added.
 # TODO Filter for priorities
 # TODO Filter for call types
+# TODO Make object oriented
 
 def query_database(query):
     """Query the database and return the results in a list."""
@@ -48,6 +49,31 @@ def pretty_print(rows):
 
 # results = query_database("""SELECT * FROM messages WHERE capcodes NOT NULL"""))
 # results = query_database("""SELECT * FROM messages WHERE type='Brandweer'""")
+
+class Stats():
+    def __init__(self):
+        blah
+
+    def query_database(query):
+        return []
+    
+    def pretty_print(rows):
+        return []
+
+    def get_most_recent_msg():
+        return []
+
+    def get_first_msg():
+        return []
+
+    def get_all_types():
+        return []
+
+    def get_regions():
+        return []
+
+    def get_time_period():
+        return []
 
 def main(argv):
     """Show useful information about P2000 items in the database."""
@@ -127,6 +153,10 @@ def main(argv):
         print('\nAll messages of last', args.time, 'minutes (' +
               str(len(results)), 'total)')
         pretty_print(results)
+
+    if not args.all & args.time & args.type & args.recent & args.first\
+           & args.region:
+        print('Nothing to show.')
 
 if __name__ == "__main__":
     try:
