@@ -3,6 +3,7 @@
 
 # TODO Scrape street + number from message details
 # TODO Scrape city name from message details
+# TODO Add http://p2000mobiel.nl scraper
 
 import urllib.request
 from urllib.error import URLError, HTTPError
