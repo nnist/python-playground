@@ -40,5 +40,13 @@ class CalculatorTest(unittest.TestCase):
     def test_calculator_divide_method_raise_error_on_divide_by_zero(self):
         self.assertRaises(ZeroDivisionError, self.calc.divide, 16, 0)
 
+    def test_calculator_power_method_returns_correct_result(self):
+        result = self.calc.power(5, 3)
+        self.assertEqual(125, result)
+
+    def test_calculator_power_method_raise_error_on_wrong_input(self):
+        self.assertRaises(ValueError, self.calc.power, 'two', 'three')
+        self.assertRaises(ValueError, self.calc.power, 1, 'a')
+
 if __name__ == '__main__':
     unittest.main()
