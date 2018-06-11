@@ -48,5 +48,15 @@ class CalculatorTest(unittest.TestCase):
         self.assertRaises(ValueError, self.calc.power, 'two', 'three')
         self.assertRaises(ValueError, self.calc.power, 1, 'a')
 
+    def test_calculator_root_method_returns_correct_result(self):
+        result = self.calc.root(16, 2)
+        self.assertEqual(4, result)
+        result = self.calc.root(8, 3)
+        self.assertEqual(2, result)
+
+    def test_calculator_root_method_raise_error_on_wrong_input(self):
+        self.assertRaises(ValueError, self.calc.root, 'two', 'three')
+        self.assertRaises(ValueError, self.calc.root, 1, 'a')
+
 if __name__ == '__main__':
     unittest.main()
