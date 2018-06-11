@@ -13,5 +13,13 @@ class CalculatorTest(unittest.TestCase):
         self.assertRaises(ValueError, self.calc.add, 'two', 'three')
         self.assertRaises(ValueError, self.calc.add, 1, 'a')
 
+    def test_calculator_subtract_method_returns_correct_result(self):
+        result = self.calc.subtract(4, 1)
+        self.assertEqual(3, result)
+
+    def test_calculator_subtract_method_raise_error_on_wrong_input(self):
+        self.assertRaises(ValueError, self.calc.subtract, 'two', 'three')
+        self.assertRaises(ValueError, self.calc.subtract, 1, 'a')
+
 if __name__ == '__main__':
     unittest.main()
