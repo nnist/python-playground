@@ -29,5 +29,16 @@ class CalculatorTest(unittest.TestCase):
         self.assertRaises(ValueError, self.calc.multiply, 'two', 'three')
         self.assertRaises(ValueError, self.calc.multiply, 1, 'a')
 
+    def test_calculator_divide_method_returns_correct_result(self):
+        result = self.calc.divide(15, 5)
+        self.assertEqual(3, result)
+
+    def test_calculator_divide_method_raise_error_on_wrong_input(self):
+        self.assertRaises(ValueError, self.calc.divide, 'two', 'three')
+        self.assertRaises(ValueError, self.calc.divide, 1, 'a')
+
+    def test_calculator_divide_method_raise_error_on_divide_by_zero(self):
+        self.assertRaises(ZeroDivisionError, self.calc.divide, 16, 0)
+
 if __name__ == '__main__':
     unittest.main()
