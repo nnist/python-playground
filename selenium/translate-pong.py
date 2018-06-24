@@ -40,13 +40,12 @@ def main(argv):
     for i in range(args.iterations):
         # Copy translated text
         result_text = browser.find_element_by_id("result_box")
-        result_text.send_keys(Keys.CONTROL, 'c')
         time.sleep(0.5)
         print("Translated text: {}".format(result_text.text))
         
         # Paste translated text into source field
         form.clear()
-        form.send_keys(Keys.CONTROL, 'v')
+        form.send_keys(result_text.text)
         time.sleep(1)
         
         # Click dropdown menu
