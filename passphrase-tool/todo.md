@@ -9,6 +9,8 @@ how much better is it than a regular password?
 'qwertiopasdfgjkl' are the only chars. it's 16 chars. attackers will know
 most chars are like this. (only if they know though... how likely is that?)
 
+- Make it clear that shown passwords only serve as an example, they are not safe to use
+- State that to make much safer passphrases, use methods like diceware
 - Add short useful info about passphrases, with sources
 - Checkboxes for verbs, nouns, etc.
 - Add selector for only or no verbs/nouns
