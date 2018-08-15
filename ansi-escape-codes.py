@@ -1,4 +1,7 @@
 """Print the ANSI escape codes for the base16 colors."""
+# See https://en.wikipedia.org/wiki/ANSI_escape_code
+# This script is meant for xterm-256color but should work for most terms
+
 from tabulate import tabulate
 
 def create_line(i, text):
