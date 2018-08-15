@@ -1,5 +1,6 @@
 """Print the ANSI escape codes for the base16 colors."""
 # See https://en.wikipedia.org/wiki/ANSI_escape_code
+# See https://misc.flogisoft.com/bash/tip_colors_and_formatting#terminals_compatibility
 # This script is meant for xterm-256color but should work for most terms
 
 from tabulate import tabulate
